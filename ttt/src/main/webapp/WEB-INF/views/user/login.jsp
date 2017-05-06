@@ -21,8 +21,8 @@
 </c:if>
 <form  action='<c:url value="/user/login"/>' method="post" id="loginForm"> 
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-ID <input type="text" name="id">
-PWD <input type="password" name="pwd">
+ID <input type="text" name="id" value="11">
+PWD <input type="password" name="pwd" value="123">
 <button type="submit" >로그인</button>
 </form>
 </body>

@@ -7,32 +7,23 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class UserVo {
 	
 	@Size(min=1,max=10, message="1~10자로 입력해주세요")
-	private String id;
+	private String userid;
 	@NotEmpty(message="필수입력 항목입니다")
-	private String pwd;
-	private String name;
+	private String upwd;
+	private String uname;
 	private String phone;
-	private String email;
+	private String uemail;
 	private String gender;
+	private String authority;
 	
 	
-	public String getId() {
-		return id;
+
+
+	public String getUpwd() {
+		return upwd;
 	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getPwd() {
-		return pwd;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUpwd(String upwd) {
+		this.upwd = upwd;
 	}
 	public String getPhone() {
 		return phone;
@@ -40,17 +31,36 @@ public class UserVo {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	
 	public String getGender() {
 		return gender;
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
+	public String getUemail() {
+		return uemail;
+	}
+	public void setUemail(String uemail) {
+		this.uemail = uemail;
 	}
 	
 	

@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="team.book.model.BookDao"> 
+<mapper namespace="team.book.model.BookDao">
 
 	<select id="search" resultType="team.book.model.BookVo">
-		SELECT * FROM Book WHERE ${category} LIKE '%'||#{keyword}||'%'
+		SELECT * FROM Book WHERE
+		${category} LIKE '%'||#{keyword}||'%'
+	</select>
+	<insert id="add" parameterType="team.book.model.BookVo">
+		INSERT INTO book
+		values(SEQ_BOOK.NEXTVAL,#{bname},#{bindex},#{author},#{publisher},#{bcontents},#{pdate},SEQ_BOOK.CURRVAL||'.'||#{coverName})
+		<selectKey order="AFTER" resultType="int" keyProperty="bnum">
+			SELECT SEQ_BOOK.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="addcate">
+		INSERT INTO category values(#{num},#{cate})
+	</insert>
+	<select id="recent" resultType="team.book.model.BookVo">
+		SELECT * FROM book WHERE bnum=#{num}
+	</select>
+	<select id="getcate" resultType="String">
+		SELECT cate FROM category WHERE bnum=#{num}
 	</select>
 </mapper>

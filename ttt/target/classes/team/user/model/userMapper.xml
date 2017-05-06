@@ -4,9 +4,30 @@
 <mapper namespace="team.user.model.UserDao"> 
 
 	<select id="check" resultType="String" >
-		SELECT userid FROM puser WHERE userid=#{id}
+		SELECT userid FROM puser WHERE userid=#{userid}
 	</select>
 	<insert id="join" parameterType="team.user.model.UserVo">
-		INSERT INTO puser VALUES(PUSER_SEQ.NEXTVAL,#{name},#{id},#{pwd},#{phone},#{gender},#{email},'USER','1') 
+		INSERT INTO puser VALUES(SEQ_PUSER.NEXTVAL,#{uname},#{userid},#{upwd},#{phone},
+		#{gender},#{uemail},#{authority},'1') 
 	</insert>
+	<select id="getvo" resultType="team.user.model.UserVo">
+		SELECT userid,uname,phone,gender,uemail,upwd FROM puser WHERE userid = #{id}
+	</select>
+	
+	<update id="edit" parameterType="HashMap">
+		UPDATE puser 
+		<set>
+			<if test="vo.uname!=null"> uname=#{vo.uname},</if>
+			<if test="vo.phone!=null"> phone=#{vo.phone},</if>
+			<if test="vo.gender!=null"> gender=#{vo.gender},</if>
+			<if test="vo.uemail!=null"> uemail=#{vo.uemail},</if>
+			<if test="newpwd!=null"> upwd=#{newpwd}</if>
+		</set>	
+		WHERE userid = #{vo.userid}
+	</update>
+	
+	<delete id="secession">
+	DELETE FROM puser WHERE userid = #{userid}
+	</delete>
+	
 </mapper>

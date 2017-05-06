@@ -1,35 +1,35 @@
 package team.book.model;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class BookVo {
 
-	private int num;
+	private int bnum;
 	private String bname;
-	private String index;
+	private String bindex;
 	private String author;
 	private String publisher;
-	private String contents;
-	private Date date;
+	private String bcontents;
+	private String pdate;
+	private List<String> cate;
+	private MultipartFile cover;
+	private String coverName;
 	
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
 	
+	public int getBnum() {
+		return bnum;
+	}
+	public void setBnum(int bnum) {
+		this.bnum = bnum;
+	}
 	public String getBname() {
 		return bname;
 	}
 	public void setBname(String bname) {
 		this.bname = bname;
-	}
-	public String getIndex() {
-		return index;
-	}
-	public void setIndex(String index) {
-		this.index = index;
 	}
 	public String getAuthor() {
 		return author;
@@ -43,18 +43,44 @@ public class BookVo {
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
-	public String getContents() {
-		return contents;
+	
+	public String getBcontents() {
+		return bcontents;
 	}
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setBcontents(String bcontents) {
+		this.bcontents = bcontents;
 	}
-	public Date getDate() {
-		return date;
+	public String getBindex() {
+		return bindex;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setBindex(String bindex) {
+		this.bindex = bindex;
 	}
+	public String getPdate() {
+		return pdate;
+	}
+	public void setPdate(String pdate) {
+		this.pdate = pdate;
+	}
+	public List<String> getCate() {
+		return cate;
+	}
+	public void setCate(List<String> cate) {
+		this.cate = cate;
+	}
+	public MultipartFile getCover() {
+		return cover;
+	}
+	public void setCover(MultipartFile cover) {
+		this.cover = cover;
+	}
+	public String getCoverName() {
+		return coverName;
+	}
+	public void setCoverName(String coverName) {
+		this.coverName = coverName;
+	}
+
 	
 	
 }

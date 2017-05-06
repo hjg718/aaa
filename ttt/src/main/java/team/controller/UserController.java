@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sun.glass.ui.delegate.MenuBarDelegate;
+
 import team.service.UserService;
 import team.user.model.UserVo;
 
@@ -52,4 +54,36 @@ public class UserController {
 		return "user/login";
 	}
 	
+	@RequestMapping("info")
+	public String info(@RequestParam("id") String id,Model model){
+		UserVo vo = svc.getvo(id);
+		model.addAttribute("userVo", vo);
+		return "user/info";
+	}
+	
+	@RequestMapping(value="edit",method=RequestMethod.GET)
+	public String edit(@RequestParam("id") String id,Model model){
+		UserVo vo = svc.getvo(id);
+		model.addAttribute("userVo", vo);
+		return "user/edit";
+	}
+	
+	@RequestMapping(value="edit",method=RequestMethod.POST)
+	public String edit(UserVo vo,@RequestParam("newpwd")String newpwd,Model model){
+		boolean pass= svc.edit(vo,newpwd);
+		if(pass){
+			model.addAttribute("vo", svc.getvo(vo.getUserid()));
+			return "user/info";
+		}
+		return "user/edit";
+	}
+	
+	@RequestMapping("secession")
+	@ResponseBody
+	public String secession(@RequestParam("upwd") String upwd,
+			@RequestParam("userid") String userid){
+		String pass = svc.secession(upwd,userid);
+		return pass;
+		
+	}
 }

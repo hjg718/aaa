@@ -2,6 +2,7 @@
     pageEncoding="utf-8"%>
     <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,15 +42,18 @@ function check(){
 </head>
 <body>
 <form:form action="join" commandName="userVo" method="post">
-ID<form:input path="id" id="p"/><form:errors path="id"/>
+ID<form:input path="userid" id="p"/><form:errors path="userid"/>
 <button type="button" onclick="check()">중복검사</button>
 <c:if test="${overlap }">중복된아이디입니다.</c:if><br>
-PWD<form:input path="pwd"/><form:errors path="pwd"/><br>
-이름 <input type="text" name="name"><br>
+PWD<form:input path="upwd"/><form:errors path="upwd"/><br>
+이름 <input type="text" name="uname"><br>
 전화번호 <input type="tel" name="phone"><br>
-이메일<input type="email" name="email"><br>
+이메일<input type="email" name="uemail"><br>
 성별 : 남자  <input type="radio" name="gender" value="m">
 여자  <input type="radio" name="gender" value="f"><br>
+<sec:authorize access="hasAuthority('ADMIN')">
+<input type="hidden" name="authority" value="MANAGER">
+</sec:authorize>
 <button type="submit">가입</button>
 </form:form>
 </body>

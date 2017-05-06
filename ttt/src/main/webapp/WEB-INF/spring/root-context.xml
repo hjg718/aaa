@@ -12,7 +12,7 @@
 	<beans:bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
 		<beans:property name="dataSourceName" value="ds" />
 		<beans:property name="URL"
-			value="jdbc:oracle:thin:@192.168.0.117:1521:xe" />
+			value="jdbc:oracle:thin:@192.168.219.152:1521:xe" />
 		<beans:property name="user" value="scott" />
 		<beans:property name="password" value="TIGER" />
 	</beans:bean>
@@ -28,7 +28,7 @@
 			username-parameter="id"
 			password-parameter="pwd" default-target-url="/index.jsp"
 			authentication-failure-url="/user/loginForm?error=true" />
-		<logout logout-success-url="/sec/db" />
+		<logout logout-success-url="/" />
 	</http>
 
 	<!-- 암호화 -->
