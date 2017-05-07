@@ -12,7 +12,19 @@
 function logout() {
 	$("#logout").submit();
 }
+
+function check() {
+	var ch = /.{2,}/;
+	 var pass = ch.test($("input[name=keyword]").val());
+	if(!pass){
+		$("#waring").text("2자 이상 입력해주세요");
+	}
+	return pass;
+}
 </script>
+<style type="text/css">
+
+</style>
 </head>
 <body>
 <sec:authentication var="id" property="name"/>
@@ -33,7 +45,7 @@ function logout() {
 <a href="${user}">내정보보기</a>
 <a href="javascript:logout();">로그아웃</a>
 </sec:authorize>
-<form action="book/search" method="post">
+<form action="book/search" method="post" onsubmit="return check();">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 <select name="category">
 <option value="bname">제목</option>
@@ -41,10 +53,12 @@ function logout() {
 <option value="publisher">출판사</option>
 </select>
 <input type="text" name="keyword">
-<button type="submit">검색</button>
+<button type="submit">검색</button><br>
+<div id="waring"></div>
 </form>
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 </form>
+<div id="div">zzz</div>
 </body>
 </html>

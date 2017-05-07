@@ -8,13 +8,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookDao {
 
-	public List<BookVo> search(@Param("keyword")String keyword,@Param("category")String category);
+	public Book search(@Param("keyword")String keyword,
+			@Param("category")String category,@Param("page") int num);
 
 	public int add(BookVo vo);
 
 	public void addcate(@Param("num") int num,@Param("cate") String string);
 
-	public BookVo recent(int num);
+	public BookVo read(int num);
 
 	public List<String> getcate(int num);
 	

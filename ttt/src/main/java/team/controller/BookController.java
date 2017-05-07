@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import team.book.model.Book;
 import team.book.model.BookVo;
 import team.service.BookService;
 
@@ -26,10 +27,23 @@ public class BookController {
 	BookService svc;
 	
 	@RequestMapping("search")
-	public ModelAndView search(@RequestParam("keyword")String keyword, @RequestParam("category")String category){
-		List<BookVo> list= svc.search(keyword, category);
-		return new ModelAndView("book/searchresult","list",list);
+	public String search(@RequestParam("keyword")String keyword, 
+			@RequestParam("category")String category,Model model){
+		Book book= svc.search(keyword, category);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("category", category);
+		model.addAttribute("book", book);
+		return "book/searchresult";
 	}
+	
+	@RequestMapping("searchPage")
+	@ResponseBody
+	public String searchPage(@RequestParam("keyword")String keyword, 
+			@RequestParam("category")String category,@RequestParam("page") int page){
+		String res = svc.searchPage(keyword, category,page);
+		return res;
+	}
+	
 	@RequestMapping("add")
 	public String add(){
 		return "book/add";
@@ -53,5 +67,11 @@ public class BookController {
 	    response.setContentType("image/jpeg");
 	    return bytes;
 	 }
+	
+	@RequestMapping("read")
+	public ModelAndView read(@RequestParam("bnum")int bnum){
+		BookVo book = svc.read(bnum);
+		return new ModelAndView("book/read","book",book);
+	}
 	
 }

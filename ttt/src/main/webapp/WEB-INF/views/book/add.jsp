@@ -20,7 +20,7 @@ enctype="multipart/form-data" method="post">
 목차 <textarea rows="10" cols="50" name="bindex"></textarea><br>
 출판사 <input type="text" name="publisher"><br>
 상세내용<textarea rows="10" cols="50" name="bcontents"></textarea><br>
-출판일 <input type="text" name="pdate"><br>
+출판일 <input type="date" name="pdate"><br>
 <input type="checkbox" name="cate" value="소설">소설
 <input type="checkbox" name="cate" value="만화">만화
 <input type="checkbox" name="cate" value="여행">여행

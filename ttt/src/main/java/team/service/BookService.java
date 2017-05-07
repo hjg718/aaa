@@ -9,11 +9,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import team.book.model.Book;
 import team.book.model.BookDao;
 import team.book.model.BookVo;
 
@@ -23,10 +26,10 @@ public class BookService {
 	@Autowired
 	private SqlSessionTemplate sqlST;
 	
-	public List<BookVo> search(String keyword,String category){
+	public Book search(String keyword,String category){
 		BookDao dao = sqlST.getMapper(BookDao.class);
-		List<BookVo> list= dao.search(keyword,category);
-		return list;
+		Book book= dao.search(keyword,category,1);
+		return book;
 	}
 
 	public boolean add(BookVo vo,HttpSession session) {
@@ -71,9 +74,32 @@ public class BookService {
 
 	public BookVo recent(int num) {
 		BookDao dao = sqlST.getMapper(BookDao.class);
-		BookVo book = dao.recent(num);
+		BookVo book = dao.read(num);
 		List<String> cate= dao.getcate(num);
 		book.setCate(cate);
+		return book;
+	}
+
+	public String searchPage(String keyword, String category, int page) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		Book book= dao.search(keyword,category,page);
+		List<BookVo> list= book.getList();
+		JSONArray jarr = new JSONArray();
+		for(int i=0;i<list.size();i++){
+			JSONObject jobj = new JSONObject();
+			jobj.put("bnum", list.get(i).getBnum());
+			jobj.put("bname", list.get(i).getBname());
+			jobj.put("conerName", list.get(i).getCoverName());
+			jobj.put("publisher", list.get(i).getPublisher());
+			jobj.put("author", list.get(i).getAuthor());
+			jarr.add(jobj);
+		}
+		return jarr.toJSONString();
+	}
+
+	public BookVo read(int bnum) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		BookVo book= dao.read(bnum);
 		return book;
 	}
 }

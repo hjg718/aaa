@@ -3,10 +3,36 @@
 
 <mapper namespace="team.book.model.BookDao">
 
-	<select id="search" resultType="team.book.model.BookVo">
-		SELECT * FROM Book WHERE
-		${category} LIKE '%'||#{keyword}||'%'
+	<select id="search" resultMap="book">
+		SELECT * FROM
+		(
+			SELECT bnum,bname,bindex,author,publisher,bcontents,pdate,covername,
+			CEIL(rn/6) page, CEIL((count(*)OVER())/6) tpg FROM
+			(
+				SELECT bnum,bname,bindex,author,publisher,bcontents,pdate,covername,ROWNUM rn 
+				FROM Book WHERE	${category} LIKE '%'||#{keyword}||'%' ORDER BY bnum
+			)
+		)
+		WHERE page=#{page}
 	</select>
+	
+	<resultMap type="team.book.model.Book" id="book">
+		<result property="page" column="page"/>
+		<result property="tpg" column="tpg"/>
+		
+		<collection property="list" column="bnum" javaType="ArrayList" 
+		ofType="team.book.model.BookVo">
+			<id property="bnum" column="bnum" />
+			<result property="bname" column="bname" />
+			<result property="bcontents" column="bcontents" />
+			<result property="bindex" column="bindex" />
+			<result property="author" column="author" />
+			<result property="publisher" column="publisher" />
+			<result property="pdate" column="pdate" />
+			<result property="coverName" column="covername" />
+		</collection>
+	</resultMap>
+	
 	<insert id="add" parameterType="team.book.model.BookVo">
 		INSERT INTO book
 		values(SEQ_BOOK.NEXTVAL,#{bname},#{bindex},#{author},#{publisher},#{bcontents},#{pdate},SEQ_BOOK.CURRVAL||'.'||#{coverName})
@@ -17,7 +43,7 @@
 	<insert id="addcate">
 		INSERT INTO category values(#{num},#{cate})
 	</insert>
-	<select id="recent" resultType="team.book.model.BookVo">
+	<select id="read" resultType="team.book.model.BookVo">
 		SELECT * FROM book WHERE bnum=#{num}
 	</select>
 	<select id="getcate" resultType="String">
