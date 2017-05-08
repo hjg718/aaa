@@ -59,6 +59,5 @@ function check() {
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 </form>
-<div id="div">zzz</div>
 </body>
 </html>

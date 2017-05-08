@@ -47,7 +47,7 @@ public class BookService {
 			try {
 				ins = file.getInputStream();
 				String coverName= vo.getBnum()+"."+name[1];
-				File f = new File("D:/test/"+coverName);
+				File f = new File("D:/upload/"+coverName);
 				byte[] buf = new byte[1024];
 				int read = 0;
 				ous = new FileOutputStream(f);
