@@ -61,7 +61,7 @@ public class BookController {
 	@ResponseBody
 	 public byte[] getImage(HttpServletResponse response, @RequestParam("coverName") String coverName) throws IOException
 	 {
-	    File file = new File("D:/test/"+coverName);
+	    File file = new File("D:/upload/"+coverName);
 	    byte[] bytes = org.springframework.util.FileCopyUtils.copyToByteArray(file);
 	    response.setContentLength(bytes.length);
 	    response.setContentType("image/jpeg");

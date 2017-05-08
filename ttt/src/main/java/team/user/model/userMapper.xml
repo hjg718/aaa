@@ -8,7 +8,7 @@
 	</select>
 	<insert id="join" parameterType="team.user.model.UserVo">
 		INSERT INTO puser VALUES(SEQ_PUSER.NEXTVAL,#{uname},#{userid},#{upwd},#{phone},
-		#{gender},#{uemail},#{authority},'1') 
+		#{uemail},#{authority},'1',#{gender}) 
 	</insert>
 	<select id="getvo" resultType="team.user.model.UserVo">
 		SELECT userid,uname,phone,gender,uemail,upwd FROM puser WHERE userid = #{id}
