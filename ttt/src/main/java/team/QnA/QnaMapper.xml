@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
         
     
-      <resultMap id="PjMap" type="team.QnAVO">
+      <resultMap id="PjMap" type="team.QnAVo">
         <result property="page" column="page"/>
         <result property="totalpages" column="totalpages"/>
         <collection property="list" column="num" javaType="ArrayList" ofType="team.QnAVO">
@@ -22,12 +22,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     
 
-    <insert id="save" parameterType="team.QnAVO">
+    <insert id="save" parameterType="team.QnAVo">
         insert into qna 
         	values ( board_seq.nextval, #{title}, #{author}, #{contents}, sysdate , #{ref})
     </insert> 
     
-    <select id="recent" resultType="team.QnAVO">
+    <select id="recent" resultType="team.QnAVo">
     	select * from qna where num=(select max(num) from
     	(select * from qna where author=#{author}))
     </select>
