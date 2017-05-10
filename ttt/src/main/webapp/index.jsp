@@ -85,18 +85,18 @@ margin: 500px auto;
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
       <ul class="nav navbar-nav navbar-right">
      	<sec:authentication var="id" property="name"/>
-     	<c:url var="user" value="user/info">
+     	<c:url var="user" value="/user/info">
 		<c:param name="id" value="${id }"/>
 	 	</c:url>
 	  	<sec:authorize access="!isAuthenticated()">
-        <li><a href="user/join">회원가입</a></li>
+        <li><a href="<c:url value="/user/join"/>">회원가입</a></li>
         <li><a href="#myModal" data-toggle="modal" >로그인</a></li>
         </sec:authorize>
         <sec:authorize access="hasAuthority('ADMIN')">
-		<li><a href="user/join">매니저계정만들기</a></li>
+		<li><a href="<c:url value="/user/join"/>">매니저계정만들기</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyAuthority('MANAGER','ADMIN')">
-		<li><a href="book/add">도서등록</a></li>
+		<li><a href="<c:url value="/book/add"/>">도서등록</a></li>
 		</sec:authorize>
 		<sec:authorize access="isAuthenticated()">
 		<li><a href="${user}">내정보보기</a></li>
@@ -105,33 +105,10 @@ margin: 500px auto;
       </ul></nav>
     </div><!-- /.navbar-collapse -->
 	</div>
-
   </div>
 </div>
 </header>
 
-<div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-       <form  action='<c:url value="/user/login"/>' method="post" id="loginForm"> 
-      <div class="modal-body">
-		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-		ID <input type="text" name="id" value="11">
-		PWD <input type="password" name="pwd" value="123">
-		
-      </div>
-      <div class="modal-footer">
-     	<button type="submit"  class="btn btn-success">로그인</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-		</form>
-    </div>
-  </div>
-</div>
 <!-- section intro -->
 <section id="intro">
 <div id="search">
@@ -246,6 +223,28 @@ margin: 500px auto;
 	</div>
 </div>
 </section>
+<!-- 로그인 모달 , 로그아웃 폼  -->
+<div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+       <form  action='<c:url value="/user/login"/>' method="post" id="loginForm"> 
+      <div class="modal-body">
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+		ID <input type="text" name="id" value="11">
+		PWD <input type="password" name="pwd" value="123">
+      </div>
+      <div class="modal-footer">
+     	<button type="submit"  class="btn btn-success">로그인</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+		</form>
+    </div>
+  </div>
+</div>
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 </form>
