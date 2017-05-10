@@ -11,23 +11,23 @@ import team.QnA.QnaVo;
 import team.service.QnaService;
 
 @Controller
-@RequestMapping("qna/")
+@RequestMapping("qb/")
 public class QnAController {
 	
 	@Autowired
-	private QnaService svc;
+	QnaService svc;
 	
 	
 	@RequestMapping(value="save",method=RequestMethod.GET)
 	public String savef(){
-		return "ts/test";
+		return "qna/input";
 	}
 	
 	@RequestMapping(value="save",method=RequestMethod.POST)
 	@ResponseBody
 	public String save(QnaVo vo,HttpSession session){
+		System.out.println(vo.getAuthor());
 		String input = svc.save(vo);
-		session.setAttribute("userId",vo.getAuthor());
 		return input;
 	}
 	
@@ -35,7 +35,7 @@ public class QnAController {
 	public String recent(QnaVo vo,Model model,HttpSession session){
 		String userId = (String)session.getAttribute("userId");
 		model.addAttribute("recent",svc.Recent(userId));
-		return "ts/recent";
+		return "qna/recent";
 		}
 }
 
