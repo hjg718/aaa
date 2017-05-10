@@ -14,7 +14,6 @@
 <script>
 function save(){
 	var param = $('#proposalF').serialize();
-	alert(param);
 	$.ajax({
 	 	url:'save',
 		method:'post',

@@ -8,12 +8,9 @@
 <title>저장페이지</title>
 </head>
 <body>
-작성자:${pj.getVo().getAuthor()}<br>
-제목:${pj.getVo().getTitle()}<br>
-내용:${pj.getVo().getContents()}<br>
-<c:forEach var="fname" items="${pj.getFlist()}">
-파일 이름:［${fname.getFname1()}］<br>
-</c:forEach>
+작성자:${recent.getAuthor()}<br>
+제목:${recent.getTitle()}<br>
+내용:${recent.getContents()}<br>
 <a href="list">목록보기</a>
 </body>
 </html>
