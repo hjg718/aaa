@@ -14,13 +14,13 @@
 </head>
 <body>
 <img alt="" width="100" height="100" src="img?coverName=${book.coverName} "/><br>
-${book.bnum }<br>
-${book.bname }<br>
-${book.bindex }<br>
-${book.bcontents }<br>
-${book.publisher }<br>
-${book.author }<br>
-${book.pdate }<br>
+등록번호 : ${book.bnum }<br>
+책이름 : ${book.bname }<br>
+목차 : ${book.bindex }<br>
+내용 : ${book.bcontents }<br>
+출판사 : ${book.publisher }<br>
+저자 : ${book.author }<br>
+출판일 : ${book.pdate }<br>
 <c:forEach var="cate" items="${book.cate }">
 ${cate }
 </c:forEach>
