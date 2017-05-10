@@ -7,7 +7,7 @@
 		SELECT * FROM
 		(
 			SELECT bnum,bname,bindex,author,publisher,bcontents,pdate,covername,
-			CEIL(rn/6) page, CEIL((count(*)OVER())/6) tpg FROM
+			CEIL(rn/5) page, CEIL((count(*)OVER())/5) tpg FROM
 			(
 				SELECT bnum,bname,bindex,author,publisher,bcontents,pdate,covername,ROWNUM rn 
 				FROM Book WHERE	${category} LIKE '%'||#{keyword}||'%' ORDER BY bnum

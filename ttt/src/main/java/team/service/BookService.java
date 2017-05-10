@@ -89,7 +89,7 @@ public class BookService {
 			JSONObject jobj = new JSONObject();
 			jobj.put("bnum", list.get(i).getBnum());
 			jobj.put("bname", list.get(i).getBname());
-			jobj.put("conerName", list.get(i).getCoverName());
+			jobj.put("coverName", list.get(i).getCoverName());
 			jobj.put("publisher", list.get(i).getPublisher());
 			jobj.put("author", list.get(i).getAuthor());
 			jarr.add(jobj);

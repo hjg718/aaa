@@ -1416,8 +1416,8 @@ th {
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
   padding: 8px;
-  line-height: 1.428571429;
-  vertical-align: top;
+  vertical-align: middle;
+	line-height : 100%;
   border-top: 1px solid #ddd;
 }
 .table > thead > tr > th {
@@ -4180,8 +4180,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   z-index: 2;
   color: #fff;
   cursor: default;
-  background-color: #428bca;
-  border-color: #428bca;
+  background-color: #3e8f3e;
+  border-color: #3e8f3e;
 }
 .pagination > .disabled > span,
 .pagination > .disabled > span:hover,
