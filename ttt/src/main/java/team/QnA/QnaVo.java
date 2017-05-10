@@ -36,10 +36,10 @@ public class QnaVo {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public String getQcontents() {
+	public String getContents() {
 		return qcontents;
 	}
-	public void setQcontents(String qcontents) {
+	public void setContents(String qcontents) {
 		this.qcontents = qcontents;
 	}
 	public Date getBdate() {

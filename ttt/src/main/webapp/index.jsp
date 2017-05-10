@@ -91,7 +91,7 @@ margin: 500px auto;
 	  	<sec:authorize access="!isAuthenticated()">
         <li><a href="user/join">회원가입</a></li>
         <li><a href="#myModal" data-toggle="modal" >로그인</a></li>
-        <li><a href="qb/list">QnA</a></li>
+        <li><a href="qb/save">qna</a></li>
         </sec:authorize>
         <sec:authorize access="hasAuthority('ADMIN')">
 		<li><a href="user/join">매니저계정만들기</a></li>

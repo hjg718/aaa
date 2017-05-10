@@ -2,7 +2,6 @@ package team.QnA;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -15,11 +14,4 @@ public interface QnaDao {
 	public ArrayList<QnaVo> List();
 	
 	public Qna getPage(int page);
-	
-	public QnaVo Read(int num);
-	
-	public ArrayList<QnaVo> Find(@Param("keyword")String keyword,@Param("category")String category);
-	
-	public int Modify(QnaVo vo);
-	
 }
