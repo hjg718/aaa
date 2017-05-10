@@ -89,7 +89,7 @@ margin: 500px auto;
 		<c:param name="id" value="${id }"/>
 	 	</c:url>
 	  	<sec:authorize access="!isAuthenticated()">
-        <li><a href="user/join">회원가입</a></li>
+        <li><a href="user/join">회원가입하기</a></li>
         <li><a href="#myModal" data-toggle="modal" >로그인</a></li>
         </sec:authorize>
         <sec:authorize access="hasAuthority('ADMIN')">
