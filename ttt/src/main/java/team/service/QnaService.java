@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jdk.nashorn.internal.scripts.JS;
 import team.QnA.QnaDao;
 import team.QnA.QnaVo;
 
@@ -28,9 +29,11 @@ public class QnaService {
 		return job.toJSONString();
 	}
 	
-	public QnaVo Recent(String userId){
+	public String Recent(String userId){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
+		JSONObject job = new JSONObject();
 		QnaVo vo = dao.Recent(userId);
-		return vo;
+		job.put("recent",vo);
+		return job.toJSONString();
 	}
 }
