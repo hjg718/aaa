@@ -12,10 +12,10 @@ import team.QnA.QnaVo;
 public class QnaService {
 	
 	@Autowired
-	private SqlSessionTemplate sqlsessiontemplate;
+	private SqlSessionTemplate sqlST;
 
 	public String  save(QnaVo vo){
-		QnaDao dao = sqlsessiontemplate.getMapper(QnaDao.class);
+		QnaDao dao = sqlST.getMapper(QnaDao.class);
 		JSONObject job = new JSONObject();
 		int input = dao.save(vo);
 		boolean ok ;
@@ -29,7 +29,7 @@ public class QnaService {
 	}
 	
 	public QnaVo Recent(String userId){
-		QnaDao dao = sqlsessiontemplate.getMapper(QnaDao.class);
+		QnaDao dao = sqlST.getMapper(QnaDao.class);
 		QnaVo vo = dao.Recent(userId);
 		return vo;
 	}
