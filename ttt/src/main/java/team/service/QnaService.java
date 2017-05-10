@@ -1,9 +1,12 @@
-package team.QnA;
+package team.service;
 
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import team.QnA.QnaDao;
+import team.QnA.QnaVo;
 
 @Service
 public class QnaService {
