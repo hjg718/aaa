@@ -20,7 +20,7 @@ import team.book.model.BookVo;
 import team.service.BookService;
 
 @Controller
-@RequestMapping("book")
+@RequestMapping("book/")
 public class BookController {
 
 	@Autowired
