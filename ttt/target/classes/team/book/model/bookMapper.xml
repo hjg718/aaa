@@ -46,7 +46,13 @@
 	<select id="read" resultType="team.book.model.BookVo">
 		SELECT * FROM book WHERE bnum=#{num}
 	</select>
+	
+	<select id="readRental" resultType="team.book.model.Book" >
+		SELECT rentaluser, returndate FROM rental WHERE booknum = #{bnum}
+	</select>
+	
 	<select id="getcate" resultType="String">
 		SELECT cate FROM category WHERE bnum=#{num}
 	</select>
+	
 </mapper>
