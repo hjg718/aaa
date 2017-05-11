@@ -10,7 +10,7 @@ public class QnaVo {
 	private String qcontents;
 	private Date bdate;
 	private int ref;
-	private int totalpagesl;
+	private int totalpages;
 	
 	public int getTotalpages() {
 		return totalpages;
