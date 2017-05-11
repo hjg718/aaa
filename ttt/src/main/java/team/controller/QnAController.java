@@ -74,7 +74,7 @@ public class QnAController {
 		return list;
 	}
 	
-	@RequestMapping(value="modify")
+	@RequestMapping(value="modify",method=RequestMethod.GET)
 	public String ModifyF(){
 		return "qna/modify";
 	}
