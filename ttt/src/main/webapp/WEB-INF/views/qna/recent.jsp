@@ -12,6 +12,5 @@
 제목:${recent.getTitle()}<br>
 내용:${recent.getContents()}<br>
 <a href="list">목록보기</a>
-<a></a>
 </body>
 </html>

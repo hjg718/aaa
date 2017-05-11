@@ -45,7 +45,7 @@ function modify(){
 <br>
 
 </div>
-<button type="submit">수정하기</button>
+<button type="submit">수정 하기</button>
  </form>
 
 </body>

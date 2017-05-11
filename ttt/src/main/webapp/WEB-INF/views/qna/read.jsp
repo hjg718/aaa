@@ -65,13 +65,13 @@ function remove(){
 <br>
 작성날자:${read.vo.bdate}<br>
 <br>
+</form>
 </div>
 
 <div id="link_group">
 <a href="list">목록보기</a>
 <a href="modify">수정하기</a>
 <button type="submit">삭제</button>
-</form>
 
 <form id="reForm" onsubmit="return re();">
 <input type="hidden" name="num" value="${read.vo.num}"> <br>
