@@ -6,8 +6,11 @@ import java.util.List;
 public class Qna {
 
 	private List<QnaVo> list;
+	
 	private QnaVo vo;
+	
 	private int page;
+	
 	private int totalpages;
 	
 	public List<QnaVo> getList() {

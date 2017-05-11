@@ -18,7 +18,7 @@ public interface QnaDao {
 	
 	public QnaVo Read(int num);
 	
-	public ArrayList<QnaVo> Find(@Param("keyword")String keyword,@Param("category")String category);
+	public ArrayList<QnaVo> Find(@Param("keyword")String keyword , @Param("category")String category);
 	
 	public int Modify(QnaVo vo);
 	
