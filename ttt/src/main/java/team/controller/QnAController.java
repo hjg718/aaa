@@ -33,6 +33,7 @@ public class QnAController {
 	public String save(QnaVo vo,HttpSession session){
 		session.setAttribute("userId",vo.getAuthor());
 		String input = svc.save(vo);
+		System.out.println(vo.getAuthor());
 		return input;
 	}
 	

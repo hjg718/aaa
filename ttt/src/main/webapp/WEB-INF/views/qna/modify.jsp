@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <style type="text/css">
 #div1 { text-align: center;}
+#qcontents{vertical-align: text-top;}
 </style>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
@@ -41,7 +42,7 @@ function modify(){
 <input type="hidden" name="num" value="${read.vo.num}"> <br>
 타이틀<input type="text" name="title"value="${read.vo.title}"> <br>
 <br>
-내용<textarea rows="5" cols="25" name="qcontents">${read.vo.qcontents}</textarea><br>
+내용<textarea id="qcontents" rows="5" cols="25" name="qcontents">${read.vo.qcontents}</textarea><br>
 <br>
 작성자<input type="text" name="author" value="${read.vo.author}"> <br>
 <br>

@@ -27,6 +27,7 @@ public class QnaService {
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
 		JSONObject job = new JSONObject();
 		int input = dao.save(vo);
+		System.out.println("svc"+vo.getAuthor());
 		boolean ok ;
 		if(input == 0){
 			ok = false;
