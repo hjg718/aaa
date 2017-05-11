@@ -28,10 +28,10 @@ public class BookController {
 	
 	@RequestMapping("search")
 	public String search(@RequestParam("keyword")String keyword, 
-			@RequestParam("category")String category,Model model){
+			@RequestParam("category")String category,HttpSession session,Model model){
 		Book book= svc.search(keyword, category);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("category", category);
+		session.setAttribute("keyword", keyword);
+		session.setAttribute("category", category);
 		model.addAttribute("book", book);
 		return "book/searchresult";
 	}
@@ -50,7 +50,7 @@ public class BookController {
 	}
 	@RequestMapping("addbook")
 	public String add(BookVo vo,Model model,HttpSession session){
-		boolean pass = svc.add(vo,session);
+		boolean pass = svc.add(vo);
 		if(pass){
 			BookVo book = svc.recent(vo.getBnum());
 			model.addAttribute("book", book);
@@ -77,8 +77,22 @@ public class BookController {
 	@RequestMapping("rental")
 	@ResponseBody
 	public String rental(@RequestParam("booknum")int booknum, @RequestParam("userid") String userid ){
-		
-		return null;
+		String pass = svc.rental(booknum,userid);
+		return pass;
+	}
+	
+	@RequestMapping("returnBook")
+	@ResponseBody
+	public String returnBook(@RequestParam("num")int num,@RequestParam("id") String id){
+		String pass= svc.returnBook(num,id);
+		return pass;
+	}
+	
+	@RequestMapping("booking")
+	@ResponseBody
+	public String booking(@RequestParam("booknum")int booknum, @RequestParam("userid") String userid ){
+		String pass = svc.booking(booknum,userid);
+		return pass;
 	}
 	
 }

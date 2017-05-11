@@ -5,7 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,7 +36,7 @@ public class BookService {
 		return book;
 	}
 
-	public boolean add(BookVo vo,HttpSession session) {
+	public boolean add(BookVo vo) {
 		BookDao dao = sqlST.getMapper(BookDao.class);
 		MultipartFile file = vo.getCover();
 		String[] name= file.getOriginalFilename().split("\\.");
@@ -103,10 +107,62 @@ public class BookService {
 		List<String> cate= dao.getcate(bnum);
 		vo.setCate(cate);
 		Book book = dao.readRental(bnum);
-		if(book==null){
+		if(book!=null){
+			Calendar cal = new GregorianCalendar(Locale.KOREA);
+			cal.setTime(book.getRentaldate());
+			cal.add(Calendar.DAY_OF_YEAR, 10);
+			SimpleDateFormat sd = new SimpleDateFormat("MM-dd");
+			String returndate = sd.format(cal.getTime());
+			book.setReturndate(returndate);
+		}
+		else if(book==null){
 			book = new Book();
 		}
+		int num = dao.checkBook(bnum);
+		List<String> subscriber = dao.subscriber(bnum);
+		book.setBookingnum(num);
+		book.setSubscriber(subscriber);
 		book.setVo(vo);
 		return book;
+	}
+
+	public String rental(int booknum, String userid) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		JSONObject jobj = new JSONObject();
+		int pass = dao.check(userid);
+			if(pass>0){
+				int row = dao.rental(booknum,userid);
+				if(row>0){
+					dao.addCurrbook(userid);
+					jobj.put("pass", true);
+				}
+			}
+			else jobj.put("pass", false);
+		return jobj.toJSONString();
+	}
+
+	public String returnBook(int num,String id) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		JSONObject jobj = new JSONObject();
+		int row = dao.returnBook(num);
+		if(row>0){
+			dao.decCurrbook(id);
+			jobj.put("pass", true);
+		}
+		return jobj.toJSONString();
+	}
+
+	public String booking(int booknum, String userid) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		JSONObject jobj = new JSONObject();
+		int pass = dao.checkBook(booknum);
+			if(pass<5){
+				int row = dao.booking(booknum,userid);
+				if(row>0){
+					jobj.put("pass", true);
+				}
+			}
+			else jobj.put("pass", false);
+		return jobj.toJSONString();
 	}
 }

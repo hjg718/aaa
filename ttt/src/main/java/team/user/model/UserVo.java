@@ -15,7 +15,8 @@ public class UserVo {
 	private String uemail;
 	private String gender;
 	private String authority;
-	
+	private int maxBook;
+	private int currBook;
 	
 
 
@@ -61,6 +62,18 @@ public class UserVo {
 	}
 	public void setUemail(String uemail) {
 		this.uemail = uemail;
+	}
+	public int getMaxBook() {
+		return maxBook;
+	}
+	public void setMaxBook(int maxBook) {
+		this.maxBook = maxBook;
+	}
+	public int getCurrBook() {
+		return currBook;
+	}
+	public void setCurrBook(int currBook) {
+		this.currBook = currBook;
 	}
 	
 	

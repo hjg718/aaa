@@ -1,6 +1,13 @@
 package team.service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -10,6 +17,10 @@ import org.springframework.stereotype.Service;
 
 import com.sun.javafx.collections.MappingChange.Map;
 
+import team.book.model.Book;
+import team.book.model.BookVo;
+import team.user.model.RentalVo;
+import team.user.model.User;
 import team.user.model.UserDao;
 import team.user.model.UserVo;
 
@@ -93,6 +104,34 @@ public class UserService {
 			}
 		}
 		return jobj.toJSONString();
+	}
+
+	public User getinfo(String id) {
+		UserDao dao= sqlST.getMapper(UserDao.class);
+		User user = new User();
+		List<RentalVo> rentalInfo = dao.rentalInfo(id);
+		List<BookVo> bvoList = new ArrayList<BookVo>();
+		for(int i=0;i<rentalInfo.size();i++){
+			BookVo vo = dao.rentalBook(rentalInfo.get(i).getBooknum());
+			bvoList.add(vo);
+			Calendar cal = new GregorianCalendar(Locale.KOREA);
+			cal.setTime(rentalInfo.get(i).getRentaldate());
+			cal.add(Calendar.DAY_OF_YEAR, 10);
+			SimpleDateFormat sd = new SimpleDateFormat("MM-dd");
+			String returndate = sd.format(cal.getTime());
+			rentalInfo.get(i).setReturndate(returndate);
+			String rendate = sd.format(rentalInfo.get(i).getRentaldate());
+			rentalInfo.get(i).setRendate(rendate);
+			Date today = new Date();
+			long day = cal.getTime().getTime() - today.getTime();
+			long diffday = day/(24*60*60*1000);
+			rentalInfo.get(i).setDay(""+diffday);
+		}
+		UserVo vo = getvo(id);
+		user.setBvoList(bvoList);
+		user.setRvoList(rentalInfo);
+		user.setVo(vo);
+		return user;
 	}
 }
 

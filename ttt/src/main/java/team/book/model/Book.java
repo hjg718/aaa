@@ -9,8 +9,11 @@ public class Book {
 	private int tpg;
 	private List<BookVo> list;
 	private String rentaluser;
-	private Date returndate;
+	private Date rentaldate;
+	private String returndate;
 	private BookVo vo;
+	private int bookingnum;
+	private List<String> subscriber;
 	
 	public int getPage() {
 		return page;
@@ -36,20 +39,36 @@ public class Book {
 	public void setRentaluser(String rentaluser) {
 		this.rentaluser = rentaluser;
 	}
-	public Date getReturndate() {
-		return returndate;
+	public Date getRentaldate() {
+		return rentaldate;
 	}
-	public void setReturndate(Date returndate) {
-		this.returndate = returndate;
+	public void setRentaldate(Date rentaldate) {
+		this.rentaldate = rentaldate;
 	}
-
 	public BookVo getVo() {
 		return vo;
 	}
 	public void setVo(BookVo vo) {
 		this.vo = vo;
 	}
-
+	public String getReturndate() {
+		return returndate;
+	}
+	public void setReturndate(String returndate) {
+		this.returndate = returndate;
+	}
+	public int getBookingnum() {
+		return bookingnum;
+	}
+	public void setBookingnum(int bookingnum) {
+		this.bookingnum = bookingnum;
+	}
+	public List<String> getSubscriber() {
+		return subscriber;
+	}
+	public void setSubscriber(List<String> subscriber) {
+		this.subscriber = subscriber;
+	}
 	
 	
 }

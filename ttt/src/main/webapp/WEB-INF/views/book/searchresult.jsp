@@ -13,7 +13,6 @@
 <script src="${url }"></script>
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
-<link rel="stylesheet" href="<c:url value='/resources/assets/css/slippry.css'/>">
 <link href="<c:url value='/resources/assets/css/style.css'/>" rel="stylesheet" />
 <link rel="stylesheet" href="<c:url value='/resources/assets/color/default.css'/>">
 <script src="<c:url value='/resources/assets/js/bootstrap.js'/>"></script>
@@ -82,6 +81,7 @@ $(function(){
     	});
     });
    	$(".${category}").addClass("success");
+  
    	</c:if>
     });
 function logout() {
@@ -91,7 +91,7 @@ function check() {
 	var ch = /.{2,}/;
 	 var pass = ch.test($("input[name=keyword]").val());
 	if(!pass){
-		$('#push').modal('show');
+		$('#input').modal('show');
 	}
 	return pass;
 }
@@ -230,18 +230,20 @@ min-height: 950px;
 	</div>
 </div>
 </section>
+<!-- 클릭 서치  -->
 <form action="search" method="post" id="clickSearch">
 	<input type="hidden" name="${_csrf.parameterName }"	value="${_csrf.token }"> 
 	<input type="hidden" name="category" id="csc">				
 	<input type="hidden" name="keyword" id="csk">
 </form>
 
-<div class="modal fade" id="push" tabindex="-1"
+<!--검색어 모달  -->
+<div class="modal fade" id="input" tabindex="-1"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
-					2자 이상 입력해주세요
+					2자 이상 입력해주세요.
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="close" data-dismiss="modal"

@@ -8,7 +8,7 @@
 	</select>
 	<insert id="join" parameterType="team.user.model.UserVo">
 		INSERT INTO puser VALUES(SEQ_PUSER.NEXTVAL,#{uname},#{userid},#{upwd},#{phone},
-		#{uemail},#{authority},'1',#{gender}) 
+		#{uemail},#{authority},'1',#{gender},5,0) 
 	</insert>
 	<select id="getvo" resultType="team.user.model.UserVo">
 		SELECT userid,uname,phone,gender,uemail,upwd FROM puser WHERE userid = #{id}
@@ -26,8 +26,16 @@
 		WHERE userid = #{vo.userid}
 	</update>
 	
-	<delete id="secession">
-	DELETE FROM puser WHERE userid = #{userid}
-	</delete>
+	<update id="secession">
+	UPDATE puser SET enabled = 0 WHERE userid = #{userid}
+	</update>
+	
+	<select id="rentalInfo" resultType="team.user.model.RentalVo">
+		SELECT num,booknum,rentaldate FROM rental WHERE rentaluser = #{userid} AND return = 1
+	</select>
+	
+	<select id="rentalBook" resultType="team.book.model.BookVo">
+		SELECT bnum,bname FROM book WHERE bnum = #{bnum}
+	</select>
 	
 </mapper>

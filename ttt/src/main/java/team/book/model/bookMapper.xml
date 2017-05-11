@@ -48,11 +48,43 @@
 	</select>
 	
 	<select id="readRental" resultType="team.book.model.Book" >
-		SELECT rentaluser, returndate FROM rental WHERE booknum = #{bnum}
+		SELECT rentaluser, rentaldate FROM rental WHERE booknum = #{bnum} AND return =1
 	</select>
 	
 	<select id="getcate" resultType="String">
 		SELECT cate FROM category WHERE bnum=#{num}
+	</select>
+	
+	<select id="check" resultType="int">
+		SELECT maxbook - currbook FROM puser WHERE userid = #{userid}
+	</select>
+	
+	<insert id="rental">
+		INSERT INTO rental VALUES(SEQ_RENTAL.NEXTVAL,#{booknum},#{userid},sysdate,'1')
+	</insert>
+	
+	<update id="addCurrbook">
+		UPDATE puser SET currbook = (currbook+1) WHERE userid = #{userid}
+	</update>
+	
+	<update id="returnBook">
+		UPDATE rental SET return = 0 WHERE num = #{num}
+	</update>
+	
+	<update id="decCurrbook">
+		UPDATE puser SET currbook = (currbook-1) WHERE userid = #{userid}
+	</update>
+	
+	<select id="checkBook" resultType="int">
+		SELECT COUNT(*) FROM booking WHERE booknum=#{booknum}
+	</select>
+	
+	<insert id="booking">
+		INSERT INTO booking VALUES (SEQ_BOOKING.NEXTVAL, #{booknum},#{userid})
+	</insert>
+	
+	<select id="subscriber" resultType="String">
+		SELECT bookinguser FROM booking WHERE booknum=#{booknum}
 	</select>
 	
 </mapper>
