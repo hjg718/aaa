@@ -76,6 +76,7 @@ public class QnaService {
 		JSONArray jarr = new JSONArray();
 		ArrayList<QnaVo> list = dao.Find(keyword,category);
 		for(int i=0; i<list.size(); i++){
+			
 			JSONObject job = new JSONObject();
 			job.put("num",list.get(i).getNum());
 			job.put("title",list.get(i).getTitle());
@@ -89,7 +90,7 @@ public class QnaService {
 	public int Modify(QnaVo vo,HttpSession session){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
 		session.setAttribute("userId",vo.getAuthor());
-		Map<String,Boolean> map = new HashMap();
+		Map<String,Boolean> map = new HashMap<String, Boolean>();
 		int mod = dao.Modify(vo);
 		boolean ok ;
 		if(mod==0){
