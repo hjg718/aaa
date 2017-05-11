@@ -18,6 +18,7 @@ public class BookVo {
 	private MultipartFile cover;
 	private String coverName;
 	private String aaaa;
+
 	
 	public int getBnum() {
 		return bnum;
