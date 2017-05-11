@@ -6,24 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="team.QnA.QnaDao"> <!--이 sql 문장과 매핑될 인터페이스의 완전한 경로-->
 
-	<resultMap id="PjMap" type="team.QnA.QnaVo">
-		<result property="page" column="page" />
-		<result property="totalpages" column="totalpages" />
-		<collection property="list" column="num" javaType="ArrayList"
-			ofType="team.QnA.QnaVo">
-			<id property="num" column="num" />
-			<result property="title" column="title" />
-			<result property="contents" column="contents" />
-			<result property="author" column="author" />
-			<result property="ref" column="ref" />
-		</collection>
-	</resultMap>
-
-
-
 	<insert id="save" parameterType="team.QnA.QnaVo">
 		insert into qna
-		values ( board_seq.nextval, #{title}, #{author}, #{contents}, sysdate ,
+		values ( board_seq.nextval, #{title}, #{author}, #{qcontents}, sysdate ,
 		#{ref})
 	</insert>
 
@@ -68,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ofType="team.QnA.QnaVo">
 			<id property="num" column="num" />
 			<result property="title" column="title" />
-			<result property="contents" column="contents" />
+			<result property="qcontents" column="qcontents" />
 			<result property="author" column="author" />
 			<result property="ref" column="ref" />
 		</collection>
@@ -96,7 +81,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where num=#{num}
 	</update>
 
-
+	<delete id="Delete" >
+        delete from qna where num=#{num}
+    </delete>
     
 </mapper>
     

@@ -90,8 +90,9 @@ public class QnaService {
 	
 	public int Modify(QnaVo vo,HttpSession session){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
+		System.out.println("svc author="+vo.getAuthor());
 		session.setAttribute("userId",vo.getAuthor());
-		Map<String,Boolean> map = new HashMap<String, Boolean>();
+		Map<String,Boolean> map = new HashMap();
 		int mod = dao.Modify(vo);
 		boolean ok ;
 		if(mod==0){
@@ -99,8 +100,21 @@ public class QnaService {
 		}else{
 			ok = true;
 		}
-		map.put("modify", ok);
+		map.put("save", ok);
 		return dao.Modify(vo);
+	}
+	
+	public String Delete(int num){
+		QnaDao dao = sqlST.getMapper(QnaDao.class);
+		int del = dao.Delete(num);
+		JSONObject job = new JSONObject();
+		boolean ok = false;
+		if(del > 0){
+			ok = true;
+			job.put("remove",ok);
+		}
+		return job.toJSONString();
+		
 	}
 	
 }

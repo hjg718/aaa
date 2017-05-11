@@ -28,7 +28,7 @@ function search() {
 	            var tr = $("<tr class=cell></tr>");
 	            var td = $("<td>" + r[i].num + "</td>");
 	            tr.append(td);
-	            td = $("<td><a href='/JavaWeb/BoardCont3?cmd=read&num="+r[i].num+"'>"
+	            td = $("<td><a href='/team/qb/read?num="+r[i].num+"'>"
 	                  + r[i].title + "</a></td>");
 	            tr.append(td);
 	            td = $("<td>" + r[i].author + "</td>");
@@ -61,6 +61,7 @@ $(function(){
          }).on("page", function(event, num){
              $("#content").html("Page" + num); // or some ajax content loading...
              var param = {};
+             param.${_csrf.parameterName}= '${_csrf.token }';
              param.pgnum = num;
              $.ajax({
               url : "page",
@@ -166,6 +167,7 @@ a:VISITED {
 <div id="box">
 <div id="page-selection"></div><br>
 <form id="searchF" onsubmit="return search();">
+<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
  <select name="category">
     <option value="title" selected>제목</option>
     <option value="author">작성자</option>
@@ -174,7 +176,7 @@ a:VISITED {
  <input type="text" name="keyword">
  <button type="submit">검색</button>
 </form>
-<a href="qb/save">글쓰기</a>
+<a href="save">글쓰기</a>
 </div>
 </body>
 </html>

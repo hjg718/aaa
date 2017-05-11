@@ -23,4 +23,5 @@ public interface QnaDao {
 	
 	public int Modify(QnaVo vo);
 	
+	public int Delete(int num);
 }

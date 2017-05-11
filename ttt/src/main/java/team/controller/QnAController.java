@@ -76,15 +76,26 @@ public class QnAController {
 	}
 	
 	@RequestMapping(value="modify",method=RequestMethod.GET)
-	public String ModifyF(){
+	public String ModifyF(Model model,QnaVo vo){
+		Qna  qna= svc.Read(vo.getNum());
+		model.addAttribute("read",qna);
 		return "qna/modify";
 	}
 	
 	@RequestMapping(value="modify",method=RequestMethod.POST)
 	@ResponseBody
 	public int Modify(QnaVo vo,HttpSession session){
+		System.out.println("con author="+vo.getAuthor());
 		int modi = svc.Modify(vo,session);
 		return modi;
+	}
+	
+	@RequestMapping(value="delete")
+	@ResponseBody
+	public String Delete(@RequestParam("num")int num){
+		String del = svc.Delete(num);
+		System.out.println(del);
+		return del;
 	}
 }
 

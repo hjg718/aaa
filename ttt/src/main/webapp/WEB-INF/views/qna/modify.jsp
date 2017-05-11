@@ -8,10 +8,11 @@
 <style type="text/css">
 #div1 { text-align: center;}
 </style>
-<script src="<c:url value="/resources/jquery-3.1.1.min.js"/>"></script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 function modify(){
 	var param = $("#modify").serialize();
+	alert(param);
 	$.ajax({
 	 	url:'modify',
 		method:'post',
@@ -35,13 +36,14 @@ function modify(){
 </head>
 <body>
 <form id="modify" onsubmit="return modify()">
+<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 <div id="div1">
-<input type="text" name="num" value="${read.getNum()}"> <br>
-타이틀<input type="hidden" name="title"value="${read.getTitle()}"> <br>
+<input type="hidden" name="num" value="${read.vo.num}"> <br>
+타이틀<input type="text" name="title"value="${read.vo.title}"> <br>
 <br>
-내용<textarea rows="5" cols="25" name="contents">${read.getContents()}</textarea><br>
+내용<textarea rows="5" cols="25" name="qcontents">${read.vo.qcontents}</textarea><br>
 <br>
-작성자<input type="text" name="author" value="${read.getAuthor()}"> <br>
+작성자<input type="text" name="author" value="${read.vo.author}"> <br>
 <br>
 
 </div>

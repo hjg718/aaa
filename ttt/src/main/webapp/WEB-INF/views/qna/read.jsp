@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script src="<c:url value="/resources/jquery-3.1.1.min.js"/>"></script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 
 function re() {
@@ -36,7 +36,7 @@ function remove(){
 		data:param,
 		dataType:'json',
 		success:function(r){
-			if(r.del){
+			if(r){
 			alert('삭제성공');
 			location.href="list";
 			}else {
@@ -55,6 +55,7 @@ function remove(){
 <body>
 <div id="div1">
 <form id = "delete" onsubmit="return remove()">
+<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 <input type="hidden" name="num" value="${read.vo.num}"> <br>
 타이틀:${read.vo.title} <br>
 <br>
@@ -65,13 +66,13 @@ function remove(){
 <br>
 작성날자:${read.vo.bdate}<br>
 <br>
+<button type="submit">삭제</button>
 </form>
 </div>
 
 <div id="link_group">
 <a href="list">목록보기</a>
-<a href="modify">수정하기</a>
-<button type="submit">삭제</button>
+<a href="modify?num=${read.vo.num}">수정하기</a>
 
 <form id="reForm" onsubmit="return re();">
 <input type="hidden" name="num" value="${read.vo.num}"> <br>
