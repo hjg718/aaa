@@ -16,7 +16,7 @@ public class BookVo {
 	private String pdate;
 	private List<String> cate;
 	private MultipartFile cover;
-	private String coverName;
+	private String coverNamee;
 
 	
 	public int getBnum() {
