@@ -70,8 +70,15 @@ public class BookController {
 	
 	@RequestMapping("read")
 	public ModelAndView read(@RequestParam("bnum")int bnum){
-		BookVo book = svc.read(bnum);
+		Book book = svc.read(bnum);
 		return new ModelAndView("book/read","book",book);
+	}
+	
+	@RequestMapping("rental")
+	@ResponseBody
+	public String rental(@RequestParam("booknum")int booknum, @RequestParam("userid") String userid ){
+		
+		return null;
 	}
 	
 }

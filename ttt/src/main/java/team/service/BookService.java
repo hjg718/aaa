@@ -72,10 +72,10 @@ public class BookService {
 		return false;
 	}
 
-	public BookVo recent(int num) {
+	public BookVo recent(int bnum) {
 		BookDao dao = sqlST.getMapper(BookDao.class);
-		BookVo book = dao.read(num);
-		List<String> cate= dao.getcate(num);
+		BookVo book = dao.read(bnum);
+		List<String> cate= dao.getcate(bnum);
 		book.setCate(cate);
 		return book;
 	}
@@ -89,7 +89,7 @@ public class BookService {
 			JSONObject jobj = new JSONObject();
 			jobj.put("bnum", list.get(i).getBnum());
 			jobj.put("bname", list.get(i).getBname());
-			jobj.put("conerName", list.get(i).getCoverName());
+			jobj.put("coverName", list.get(i).getCoverName());
 			jobj.put("publisher", list.get(i).getPublisher());
 			jobj.put("author", list.get(i).getAuthor());
 			jarr.add(jobj);
@@ -97,9 +97,16 @@ public class BookService {
 		return jarr.toJSONString();
 	}
 
-	public BookVo read(int bnum) {
+	public Book read(int bnum) {
 		BookDao dao = sqlST.getMapper(BookDao.class);
-		BookVo book= dao.read(bnum);
+		BookVo vo= dao.read(bnum);
+		List<String> cate= dao.getcate(bnum);
+		vo.setCate(cate);
+		Book book = dao.readRental(bnum);
+		if(book==null){
+			book = new Book();
+		}
+		book.setVo(vo);
 		return book;
 	}
 }

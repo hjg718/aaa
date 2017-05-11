@@ -10,7 +10,6 @@
 <title>Groovin one page bootstrap template</title>
 <!-- styles -->
 
-<link rel="stylesheet" href="<c:url value='/resources/assets/css/fancybox/jquery.fancybox.css'/>">
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
 <link rel="stylesheet" href="<c:url value='/resources/assets/css/slippry.css'/>">
@@ -65,6 +64,7 @@ z-index: 6;
 width: 400px;
 height: 100px;
 margin: 500px auto;
+margin-top: 23%;
 }
 </style>
 </head>
@@ -79,7 +79,7 @@ margin: 500px auto;
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Groovin</a>
+      <a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
     </div>
 	<div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
@@ -134,7 +134,7 @@ margin: 500px auto;
 				<a ><img src="<c:url value='/resources/assets/img/slide/2.jpg'/>"  alt="원하시는 도서를 검색하세요"></a>
 			  </li>
 			  <li>
-				<a ><img src="<c:url value='/resources/assets/img/slide/3.jpg'/>" alt="감사합니다. <span class='red'>♥</span> it :)"></a>
+				<a ><img src="<c:url value='/resources/assets/img/slide/3.jpg'/>" alt="감사합니다. <span class='red'>♥</span>:)"></a>
 			  </li>
 			</ul>
 </section>
@@ -234,8 +234,8 @@ margin: 500px auto;
        <form  action='<c:url value="/user/login"/>' method="post" id="loginForm"> 
       <div class="modal-body">
 		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-		ID <input type="text" name="id" value="11">
-		PWD <input type="password" name="pwd" value="123">
+		ID <input type="text" name="id">
+		PWD <input type="password" name="pwd" >
       </div>
       <div class="modal-footer">
      	<button type="submit"  class="btn btn-success">로그인</button>
@@ -248,5 +248,6 @@ margin: 500px auto;
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 </form>
+<a href="qna/save">QnA</a>
 </body>
 </html>

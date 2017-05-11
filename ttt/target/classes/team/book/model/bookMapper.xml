@@ -7,7 +7,7 @@
 		SELECT * FROM
 		(
 			SELECT bnum,bname,bindex,author,publisher,bcontents,pdate,covername,
-			CEIL(rn/6) page, CEIL((count(*)OVER())/6) tpg FROM
+			CEIL(rn/5) page, CEIL((count(*)OVER())/5) tpg FROM
 			(
 				SELECT bnum,bname,bindex,author,publisher,bcontents,pdate,covername,ROWNUM rn 
 				FROM Book WHERE	${category} LIKE '%'||#{keyword}||'%' ORDER BY bnum
@@ -46,7 +46,13 @@
 	<select id="read" resultType="team.book.model.BookVo">
 		SELECT * FROM book WHERE bnum=#{num}
 	</select>
+	
+	<select id="readRental" resultType="team.book.model.Book" >
+		SELECT rentaluser, returndate FROM rental WHERE booknum = #{bnum}
+	</select>
+	
 	<select id="getcate" resultType="String">
 		SELECT cate FROM category WHERE bnum=#{num}
 	</select>
+	
 </mapper>

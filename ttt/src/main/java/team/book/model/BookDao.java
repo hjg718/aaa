@@ -18,5 +18,7 @@ public interface BookDao {
 	public BookVo read(int num);
 
 	public List<String> getcate(int num);
+
+	public Book readRental(int bnum);
 	
 }

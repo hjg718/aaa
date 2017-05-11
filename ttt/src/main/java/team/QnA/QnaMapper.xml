@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="team.QnA.QnaDao"> <!--이 sql 문장과 매핑될 인터페이스의 완전한 경로-->
+
+        
+
+    <insert id="save" parameterType="team.QnA.QnaVo">
+        insert into qna 
+        	values ( board_seq.nextval, #{title}, #{author}, #{contents}, sysdate , #{ref})
+    </insert> 
+    
+    <select id="recent" resultType="team.QnA.QnaVo">
+    	select * from qna where num=(select max(num) from
+    	(select * from qna where author=#{author}))
+    </select>
+    
+</mapper>
+    
+
+
+
+
