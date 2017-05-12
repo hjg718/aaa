@@ -271,9 +271,9 @@ min-height: 950px;
 					id="loginForm">
 					<div class="modal-body">
 						<input type="hidden" name="${_csrf.parameterName }"
-							value="${_csrf.token }"> ID <input type="text" name="id"
-							value="11"> PWD <input type="password" name="pwd"
-							value="123">
+							value="${_csrf.token }">
+							 ID <input type="text" name="id"> 
+							PWD <input type="password" name="pwd">
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-success">로그인</button>

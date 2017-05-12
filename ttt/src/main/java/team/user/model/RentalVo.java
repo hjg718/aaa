@@ -10,7 +10,7 @@ public class RentalVo {
 	private String rendate;
 	private int booknum;
 	private String day;
-	
+	private String bookname;
 	
 	public int getNum() {
 		return num;
@@ -47,6 +47,12 @@ public class RentalVo {
 	}
 	public void setRendate(String rendate) {
 		this.rendate = rendate;
+	}
+	public String getBookname() {
+		return bookname;
+	}
+	public void setBookname(String bookname) {
+		this.bookname = bookname;
 	}
 	
 	

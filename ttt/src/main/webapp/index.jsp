@@ -248,6 +248,5 @@ margin-top: 23%;
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 </form>
-<a href="qna/save">QnA</a>
 </body>
 </html>

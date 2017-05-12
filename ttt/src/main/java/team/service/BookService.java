@@ -79,8 +79,6 @@ public class BookService {
 	public BookVo recent(int bnum) {
 		BookDao dao = sqlST.getMapper(BookDao.class);
 		BookVo book = dao.read(bnum);
-		List<String> cate= dao.getcate(bnum);
-		book.setCate(cate);
 		return book;
 	}
 
@@ -103,9 +101,7 @@ public class BookService {
 
 	public Book read(int bnum) {
 		BookDao dao = sqlST.getMapper(BookDao.class);
-		BookVo vo= dao.read(bnum);
-		List<String> cate= dao.getcate(bnum);
-		vo.setCate(cate);
+		BookVo vo = dao.read(bnum);
 		Book book = dao.readRental(bnum);
 		if(book!=null){
 			Calendar cal = new GregorianCalendar(Locale.KOREA);
@@ -163,6 +159,33 @@ public class BookService {
 				}
 			}
 			else jobj.put("pass", false);
+		return jobj.toJSONString();
+	}
+
+	public String cancel(int num) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		JSONObject jobj = new JSONObject();
+		int row = dao.cancel(num);
+		if(row>0){
+			jobj.put("pass", true);
+		}
+		else jobj.put("pass", false);
+		return jobj.toJSONString();
+	}
+
+	public String bookingrental(int booknum, int bookingnum, String userid) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		JSONObject jobj = new JSONObject();
+		int pass = dao.check(userid);
+		if(pass>0){
+			int row = dao.rental(booknum,userid);
+			if(row>0){
+				dao.addCurrbook(userid);
+				dao.cancel(bookingnum);
+				jobj.put("pass", true);
+			}
+		}
+		else jobj.put("pass", false);
 		return jobj.toJSONString();
 	}
 }

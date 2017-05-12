@@ -1,15 +1,13 @@
 package team.user.model;
 
-import java.util.Date;
 import java.util.List;
 
-import team.book.model.BookVo;
 
 public class User {
 	
 	private UserVo vo;
 	private List<RentalVo> rvoList;
-	private List<BookVo> bvoList;
+	private List<BookingVo> bvoList;
 	
 	public UserVo getVo() {
 		return vo;
@@ -23,13 +21,12 @@ public class User {
 	public void setRvoList(List<RentalVo> rvoList) {
 		this.rvoList = rvoList;
 	}
-	public List<BookVo> getBvoList() {
+	public List<BookingVo> getBvoList() {
 		return bvoList;
 	}
-	public void setBvoList(List<BookVo> bvoList) {
+	public void setBvoList(List<BookingVo> bvoList) {
 		this.bvoList = bvoList;
 	}
 	
-	
-	
+
 }

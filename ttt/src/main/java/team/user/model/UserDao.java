@@ -1,5 +1,6 @@
 package team.user.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +17,8 @@ public interface UserDao {
 	public UserVo getvo(String id);
 	public int edit(HashMap<String, Object> map);
 	public int secession(String userid);
-	public List<RentalVo> rentalInfo(String userid);
-	public BookVo rentalBook(int bnum);
+	public List<BookingVo> booking(String id);
+	public List<RentalVo> rental(String userid);
+	public Date rentalCheck(int booknum);
 
 }

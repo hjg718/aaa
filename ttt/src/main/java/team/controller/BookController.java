@@ -94,5 +94,18 @@ public class BookController {
 		String pass = svc.booking(booknum,userid);
 		return pass;
 	}
+	@RequestMapping("cancel")
+	@ResponseBody
+	public String cancel(@RequestParam("num")int num){
+		String pass = svc.cancel(num);
+		return pass;
+	}
+	@RequestMapping("bookingrental")
+	@ResponseBody
+	public String bookingrental(@RequestParam("booknum")int booknum,
+			@RequestParam("bookoingnum")int bookingnum,@RequestParam("userid") String userid){
+		String pass = svc.bookingrental(booknum,bookingnum,userid);
+		return pass;
+	}
 	
 }

@@ -15,10 +15,6 @@ public interface BookDao {
 
 	public void addcate(@Param("num") int num,@Param("cate") String string);
 
-	public BookVo read(int num);
-
-	public List<String> getcate(int num);
-
 	public Book readRental(int bnum);
 
 	public int rental(@Param("booknum")int booknum,@Param("userid") String userid);
@@ -36,5 +32,9 @@ public interface BookDao {
 	public int booking(@Param("booknum")int booknum,@Param("userid") String userid);
 
 	public List<String> subscriber(int bnum);
+	
+	public BookVo read(int bnum);
+
+	public int cancel(int num);
 	
 }

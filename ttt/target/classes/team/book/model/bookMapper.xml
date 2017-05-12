@@ -43,21 +43,6 @@
 	<insert id="addcate">
 		INSERT INTO category values(#{num},#{cate})
 	</insert>
-	<select id="read" resultType="team.book.model.BookVo">
-		SELECT * FROM book WHERE bnum=#{num}
-	</select>
-	
-	<select id="readRental" resultType="team.book.model.Book" >
-		SELECT rentaluser, rentaldate FROM rental WHERE booknum = #{bnum} AND return =1
-	</select>
-	
-	<select id="getcate" resultType="String">
-		SELECT cate FROM category WHERE bnum=#{num}
-	</select>
-	
-	<select id="check" resultType="int">
-		SELECT maxbook - currbook FROM puser WHERE userid = #{userid}
-	</select>
 	
 	<insert id="rental">
 		INSERT INTO rental VALUES(SEQ_RENTAL.NEXTVAL,#{booknum},#{userid},sysdate,'1')
@@ -75,16 +60,50 @@
 		UPDATE puser SET currbook = (currbook-1) WHERE userid = #{userid}
 	</update>
 	
-	<select id="checkBook" resultType="int">
-		SELECT COUNT(*) FROM booking WHERE booknum=#{booknum}
-	</select>
-	
 	<insert id="booking">
 		INSERT INTO booking VALUES (SEQ_BOOKING.NEXTVAL, #{booknum},#{userid})
 	</insert>
 	
+	<select id="check" resultType="int">
+		SELECT maxbook - currbook FROM puser WHERE userid = #{userid}
+	</select>
+	
+	<select id="readRental" resultType="team.book.model.Book" >
+		SELECT rentaluser, rentaldate FROM rental WHERE booknum = #{bnum} AND return =1
+	</select>
+	
+	<select id="checkBook" resultType="int">
+		SELECT COUNT(*) FROM booking WHERE booknum=#{booknum}
+	</select>
+	
 	<select id="subscriber" resultType="String">
 		SELECT bookinguser FROM booking WHERE booknum=#{booknum}
 	</select>
+
+	<select id="read" resultMap="bookread">
+		SELECT b.*,cate FROM BOOK b 
+		INNER JOIN category c ON b.bnum = c.bnum
+		WHERE b.bnum=#{num} 
+	</select>
+	
+	<resultMap type="team.book.model.BookVo" id="bookread">
+		<result property="bnum" column="bnum" />
+		<result property="bname" column="bname" />
+		<result property="bcontents" column="bcontents" />
+		<result property="bindex" column="bindex" />
+		<result property="author" column="author" />
+		<result property="publisher" column="publisher" />
+		<result property="pdate" column="pdate" />
+		<result property="coverName" column="covername" />
+		
+		<collection property="cate" column="cate" javaType="ArrayList" 
+		ofType="String">
+		<id column="cate"/>
+		</collection>
+	</resultMap>
+	
+	<delete id="cancel">
+		DELETE FROM booking WHERE num=#{num}
+	</delete>
 	
 </mapper>
