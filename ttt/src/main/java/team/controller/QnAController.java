@@ -1,6 +1,8 @@
 package team.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,8 @@ public class QnAController {
 	@ResponseBody
 	public String save(QnaVo vo,HttpSession session){
 		session.setAttribute("userId",vo.getAuthor());
+		session.setAttribute("pwd",vo.getPwd());
 		String input = svc.save(vo);
-		System.out.println(vo.getAuthor());
 		return input;
 	}
 	
@@ -51,7 +53,7 @@ public class QnAController {
 		model.addAttribute("list",list);
 		session.setAttribute("curr",1);
 		session.setAttribute("total",list.get(0).getTotalpages());
-		return "qna/list";
+		return "qna/list"; 
 	}
 	
 	@RequestMapping(value="page", method=RequestMethod.POST)
@@ -63,40 +65,59 @@ public class QnAController {
 	
 
 	@RequestMapping(value="read")
-	public String Read(@RequestParam("num")int num,Model model,QnaVo vo){
-		Qna  qna= svc.Read(num);
-		model.addAttribute("read",qna);
+	public String Read(@RequestParam("num")int num,Model model,QnaVo vo,HttpSession session){
+		session.setAttribute("read",svc.Read(num));
 		return "qna/read";
 	}
 	
 	@RequestMapping(value="find")
 	@ResponseBody
-	public String Find(@RequestParam("keyword")String keyword, @RequestParam("category")String category, HttpSession session){
-		String list = svc.Find(keyword,category);
+	public String Find(@RequestParam("keyword")String keyword, @RequestParam("category")String category,@RequestParam("pgnum")int pgnum
+			,HttpSession session){
+		String list = svc.Find(keyword, category, pgnum);
 		return list;
 	}
 	
+	
+	
 	@RequestMapping(value="modify",method=RequestMethod.GET)
-	public String ModifyF(Model model,QnaVo vo){
-		Qna  qna= svc.Read(vo.getNum());
-		model.addAttribute("read",qna);
+	public String ModifyF(HttpSession session,@RequestParam("pwd")int pwd){
+		int fpwd = (Integer) session.getAttribute("pwd");
+		if(fpwd != pwd){
+			return "qna/read";
+		}else {
 		return "qna/modify";
+		}
 	}
+	
+	
 	
 	@RequestMapping(value="modify",method=RequestMethod.POST)
 	@ResponseBody
-	public int Modify(QnaVo vo,HttpSession session){
-		System.out.println("con author="+vo.getAuthor());
-		int modi = svc.Modify(vo,session);
-		return modi;
+	public Map<String, Integer> setUpdateModify(QnaVo vo,HttpSession session){
+		int mo = svc.Modify(vo, session);
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("mo",mo);
+		return map;
 	}
+	
+	
 	
 	@RequestMapping(value="delete")
 	@ResponseBody
 	public String Delete(@RequestParam("num")int num){
 		String del = svc.Delete(num);
-		System.out.println(del);
 		return del;
 	}
+	
+	@RequestMapping(value="reple")
+	@ResponseBody
+	public String Reple(QnaVo vo,HttpSession session){
+		session.setAttribute("userId",vo.getAuthor());
+		String re = svc.save(vo);
+		return re;
+	}
+	
+	
 }
 

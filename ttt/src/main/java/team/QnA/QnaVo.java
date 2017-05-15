@@ -8,11 +8,19 @@ public class QnaVo {
 	private String title;
 	private String author;
 	private String qcontents;
+	private int pwd;
 	private Date bdate;
 	private int ref; 
 	
+	private int page;
 	private int totalpages;
 	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public int getTotalpages() {
 		return totalpages;
 	}
@@ -42,6 +50,12 @@ public class QnaVo {
 	}
 	public void setQcontents(String qcontents) {
 		this.qcontents = qcontents;
+	}
+	public int getPwd() {
+		return pwd;
+	}
+	public void setPwd(int pwd) {
+		this.pwd = pwd;
 	}
 	public Date getBdate() {
 		return bdate;

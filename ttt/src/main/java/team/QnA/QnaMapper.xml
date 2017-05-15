@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="save" parameterType="team.QnA.QnaVo">
 		insert into qna
 		values ( board_seq.nextval, #{title}, #{author}, #{qcontents}, sysdate ,
-		#{ref})
+		#{ref},#{pwd})
 	</insert>
 
 	<select id="Recent" resultType="team.QnA.QnaVo">
@@ -44,6 +44,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 		)where page=#{ pgnum }
 	</select>
+	
+	   <select id="Find" resultType="team.QnA.QnaVo">
+		select NUM,TITLE,AUTHOR,QCONTENTS,BDATE,PAGE,ROWNUM,QREF,TOTALPAGES from(
+		select num, title,author,qcontents,bdate,FLOOR((rownum-1)/7+1)
+		page,rownum,qref,ceil(count(*) over()/7) totalpages from
+		(
+		select num,lpad('└',(level-1)*3,' ')||title
+		title,author,qcontents,bdate,qref,rownum from
+		(select num, title,author,qcontents,bdate,rownum,qref from qna)
+		where ${category} like '%'||#{keyword}||'%'
+		start with qref=0 connect by prior num=qref
+		)
+		)where page=#{pgnum}
+	</select>
+	
+	
 
 	<resultMap id="qnaMap" type="team.QnA.Qna">
 		<result property="page" column="page" />
@@ -59,11 +75,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</collection>
 	</resultMap>
 
-	<select id="Read" resultType="team.QnA.QnaVo">
+ 	<select id="Read" resultType="team.QnA.QnaVo">
 		select * from qna where num=#{num}
 	</select>
 
-	<select id="Find" resultType="team.QnA.QnaVo">
+	<!-- <select id="Find" resultType="team.QnA.QnaVo">
 		SELECT * FROM qna WHERE
 		<if test="category=='title'">
 			title LIKE '%'||#{keyword}||'%'
@@ -74,8 +90,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="category=='contents'">
 			qcontents LIKE '%'||#{keyword}||'%'
 		</if>
-	</select>
-
+	</select>    -->
+	
 	<update id="Modify" parameterType="team.QnA.QnaVo">
 		update qna set title=#{title},author=#{author}, qcontents=#{qcontents}
 		where num=#{num}

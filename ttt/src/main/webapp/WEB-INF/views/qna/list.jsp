@@ -13,6 +13,7 @@
 <script src="<c:url value="/resources/jquery.bootpag.min.js"/>"></script>
 <script src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
 <script>
 function search() {
 	   var param = $("#searchF").serialize();
@@ -35,10 +36,58 @@ function search() {
 	            tr.append(td);
 	            $("table").append(tr);
 	         }
+	         $('#page-selection').empty();
+	          $('#page-selection').off("page");
+	           $('#page-selection').bootpag({
+	                 total: r[0].total,        /* total pages */
+	                 page:  r[0].curr,           /* current page */
+	                 maxVisible: 5,      /* Links per page */
+	                 leaps: true,
+	                 firstLastUse: true,
+	                 first: '←',
+	                 last: '→',
+	                 wrapClass: 'pagination',
+	                 activeClass: 'active',
+	                 disabledClass: 'disabled',
+	                 nextClass: 'next',
+	                 prevClass: 'prev',
+	                 lastClass: 'last',
+	                 firstClass: 'first'
+	             }).on("page", function(event, num){
+	                var param={};
+	                param.pgnum = num;
+	                param.category = $("select[name=category]").val();
+	                param.keyword=$("input[name=keyword]").val();
+	                param.${_csrf.parameterName } = '${_csrf.token }';
+	                $.ajax({
+	                   url : 'find',
+	                   method : 'post',
+	                   data : param,
+	                   dataType : 'json',
+	                   success : function(r){
+	                      $("#tb1").empty();
+	                      for(var i=1;i<r.length;i++){
+	                      var cell = $("<div class='cell'></div>");
+	                      var col = $("<span class='col'>"+r[i].num+"</span>")
+	                      cell.append(col);
+	                      col=$("<span class='tt'><a href='javascript:read("+r[i].num+")'>"+r[i].title+"</a></span>");
+	                      cell.append(col);   
+	                      col=$("<span class='col' id='desc'>"+r[i].author+"</span>");
+	                      cell.append(col);   
+	                      $("#tb1").append(cell);
+	                      }
+	                   },
+	                   error : function(x,s,e){
+	                      alert('여기!');
+	                   }
+	                });
+	            });
+	                
 	      },
-	      error : function(x, s, e) {
-	         alert(e);
+	      error : function(x,s,e) {
+	         alert("여기오!");
 	      }
+	      
 	   });
 	   return false;
 	}
@@ -59,7 +108,7 @@ $(function(){
              lastClass: 'last',
              firstClass: 'first'
          }).on("page", function(event, num){
-             $("#content").html("Page" + num); // or some ajax content loading...
+             $("#contents").html("Page" + num); // or some ajax content loading...
              var param = {};
              param.${_csrf.parameterName}= '${_csrf.token }';
              param.pgnum = num;
@@ -80,6 +129,7 @@ $(function(){
                   td = $("<td>" + r[i].author + "</td>");
                   tr.append(td);
                   $("table").append(tr);
+                  
                }
               },
               error : function(x, s, e) {
@@ -91,64 +141,16 @@ $(function(){
    });
 
 </script>
-<style>
-#box {
-text-align: center;
-}
+<style type="text/css">
+header {text-align: center;}
 
-table {
-   margin: 0px auto;
-   border: 1px solid black;
-   width: 800px;
-}
-
-tr:NTH-CHILD(2n+1) {
-   background-color: rgb(200, 200, 174);
-}
-
-th {
-   font-size: 20pt;
-   border-bottom: 1px solid black;
-   text-align: center;
-}
-
-td {
-text-align: center;
-   font-size: 13pt;
-}
-
-a {
-   text-decoration: none;
-}
-
-a:LINK {
-   color: black;
-}
-
-a:VISITED {
-   color: black;
-}
-
-#serch {
-   width: 500px;
-   margin: 5px auto;
-}
-
-#select {
-   height: 25px;
-}
-
-#chPage {
-   display: inline;
- }
-
-#page {
-   text-align: center;
-}
 </style>
 </head>
 <body>
-   <table>
+<header>
+<img src="../resources/assets/img/QnA.jpg">
+</header>
+   <table id="tb1">
       <tr>
          <th>번호</th>
          <th>제목</th>
@@ -162,12 +164,14 @@ a:VISITED {
       </tr>
       </c:forEach>
    </table>
+   
 <br>
 <p>
 <div id="box">
 <div id="page-selection"></div><br>
 <form id="searchF" onsubmit="return search();">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+<input type="hidden" name="pgnum" value="1">
  <select name="category">
     <option value="title" selected>제목</option>
     <option value="author">작성자</option>
@@ -176,7 +180,7 @@ a:VISITED {
  <input type="text" name="keyword">
  <button type="submit">검색</button>
 </form>
-<a href="save">글쓰기</a>
+<a href="save">글쓰기</a> <a href="../index.jsp">메인페이지 </a>
 </div>
 </body>
 </html>

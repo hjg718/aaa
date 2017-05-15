@@ -20,11 +20,10 @@ function modify(){
 		data:param,
 		dataType:'json',
 		success:function(r){
-			if(r){
+			if(r.mo==1){
 			alert('저장 성공');
 			location.href="recent";
 			}
-			else alert('저장 실패')
 		},
 		error:function(xhr,status,err){
 			alert("오류발생");
@@ -39,16 +38,17 @@ function modify(){
 <form id="modify" onsubmit="return modify()">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 <div id="div1">
-<input type="hidden" name="num" value="${read.vo.num}"> <br>
-타이틀<input type="text" name="title"value="${read.vo.title}"> <br>
+<input type="hidden" name="num" value="${read.num}"> <br>
+타이틀<input type="text" name="title"value="${read.title}"> <br>
 <br>
-내용<textarea id="qcontents" rows="5" cols="25" name="qcontents">${read.vo.qcontents}</textarea><br>
+내용<textarea id="qcontents" rows="5" cols="25" name="qcontents">${read.qcontents}</textarea><br>
 <br>
-작성자<input type="text" name="author" value="${read.vo.author}"> <br>
+작성자<input type="text" name="author" value="${read.author}"> <br>
 <br>
 
 </div>
 <button type="submit">수정 하기</button>
+<a href="list">목록보기</a>
  </form>
 
 </body>

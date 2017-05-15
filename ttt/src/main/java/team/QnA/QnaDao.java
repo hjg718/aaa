@@ -15,13 +15,13 @@ public interface QnaDao {
 	public ArrayList<QnaVo> List();
 	
 	public Qna getPage(int page);
-
 	
 	public QnaVo Read(int num);
 	
-	public ArrayList<QnaVo> Find(@Param("keyword")String keyword , @Param("category")String category);
+	public ArrayList<QnaVo> Find(@Param("keyword")String keyword , @Param("category")String category,@Param("pgnum")int pgnum);
 	
 	public int Modify(QnaVo vo);
 	
 	public int Delete(int num);
+	
 }

@@ -101,6 +101,7 @@ margin: 500px auto;
 		<sec:authorize access="isAuthenticated()">
 		<li><a href="${user}">내정보보기</a></li>
 		<li><a href="javascript:logout();">로그아웃</a></li>
+        <li><a href="qb/list">qna</a></li>
 		</sec:authorize>
       </ul></nav>
     </div><!-- /.navbar-collapse -->
