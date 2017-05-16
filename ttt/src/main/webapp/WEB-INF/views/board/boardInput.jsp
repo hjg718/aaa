@@ -4,17 +4,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="<c:url value='/resources/jquery-2.2.4.min.js'/>"></script> 
-
+<script src="<c:url value='/resources/jquery-2.2.4.min.js'/>"></script> 
 <meta charset="utf-8">
+
 <title>자유 게시판 글 쓰기</title>
-
+<style type="text/css">
+#contents,#title{vertical-align: text-top;}
+</style>
 <script type="text/javascript">
-
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 function boardInput(){
 	var param = $('#inputForm').serialize();
-	
-		$.ajax({
+
+	var c = $('#contents').val();
+	var t = $('#title').val();
+		if(c==""||c==null){alert("내용을 입력 하세요.");return;}
+		else if(t==""||t==null){alert("제목을 입력 하세요.");return;}
+
+	$.ajax({
 		url:"boardInput",
 		method:"post",
 		data:param,
@@ -29,10 +36,11 @@ function boardInput(){
 				}
 			}
 		},
-		error:function(xhr,status,err){alert("오류"+err);}
+		error:function(xhr,status,err){alert("오류");}
 	});
-	return false;
 }
+
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 </script>
 
 </head>
@@ -41,16 +49,17 @@ function boardInput(){
 <!-- 로그인된 아이디가 저장된다. -->
 <sec:authentication property="name" var="loginId"/>
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-<form id="inputForm" onsubmit='return boardInput();'>
+<form id="inputForm"'>
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-글 제목:<textarea rows="5" cols="15" id="title" name="title" >(제목 없음)</textarea><br>
-글 내용:<textarea rows="5" cols="15" id="contents" name="contents">내용을 입력해주세요.</textarea><br>
+제 목:<input type="text" id="title" name="title"><br>
+내 용:<textarea type="text" rows="7" cols="22" id="contents" name="contents"></textarea><br>
 	<input type="hidden" name="author" value="${loginId}">
 작성자:${loginId}<br>
-<button type="submit">[글 올리기]</button><button type="reset">[다시 작성]</button>
+<button type="button" onclick="boardInput();">저　장</button>
+<button type="reset">리　셋</button>
 </form>
 
-<h6><a href = "boardListStart">목록 바로 가기</a></h6>
+<h6><a href = "boardListStart">자유게시판 목록 바로 가기</a></h6>
 
 </body>
 </html>

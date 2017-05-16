@@ -12,9 +12,21 @@ public interface BoardDAO {
 	public BoardVO info(int num);//제목 클릭시 내용 보여주기
 	public int update(BoardVO board); //수정
 	public int delete(int num); //삭제
+	public void readCnt(BoardVO board); //조회수
+	public List<BoardVO> goodList();//추천수 리스트
+	
+	public int goodCnt(BoardVO board);//추천수
+	public void goodCntUser(BoardVO board);//추천인 저장
+	public List<BoardVO> goodUserList(BoardVO board);//추천한 아이디와 추천글 리스트 
 	
 	public List<BoardVO> search
 	(@Param("category") String cat,@Param("keyword") String key); //검색
+	
+	
+	
+	
+	
+	
 
 
 

@@ -8,10 +8,19 @@
 <meta charset="utf-8">
 <title>수정</title>
 
+<style type="text/css">
+#contents,#title{vertical-align: text-top;}
+</style>
+
+
 <script type="text/javascript">
 function edit(){
 	
 	var param = $('#editForm').serialize();
+	var t = $('#title').val();
+	var c = $('#contents').val();
+	if(t==""||t==null){alert("제목을 입력 해주세요.");return;}
+	else if(c==""||c==null){alert("내용을 입력 해주세요.");return;}
 	
 	$.ajax({
 		url:'update',

@@ -23,10 +23,11 @@ public class BoardController {
 	public String boardListStart(Model model){
 		Board b = svc.boardFirstPage(1);
 		List<BoardVO> list = b.getList();
-		
 		model.addAttribute("total",b.getTotalpage());
 		model.addAttribute("curr", b.getCurrpage());
 		model.addAttribute("boardlist",list);
+		List<BoardVO> goodList =svc.goodList();
+		model.addAttribute("goodlist",goodList);
 		return "board/boardList";
 	}
 	//페이지 번호
@@ -62,13 +63,16 @@ public class BoardController {
 		return job.toJSONString();
 	}
 	
-	//제목 클릭시 내용 읽어오기
+	//제목 클릭시 내용 읽어오기  , 조회수
 	@RequestMapping("info")
-	public String info(@RequestParam("num") int num,Model model){
+	public String info(@RequestParam("num") int num,BoardVO boardvo,Model model){
+		svc.readCnt(boardvo); // 조회수  void 이게 먼저 실행
+		//svc.readCnt(boardVO) 실행후 밑에가 실행 된다.
 		BoardVO list = svc.info(num);
 		model.addAttribute("list",list);
 		return "board/boardInfo";
 	}
+	
 	//수정1
 	@RequestMapping("edit")
 	public String edit(Model model, @RequestParam("num") int num){
@@ -102,6 +106,16 @@ public class BoardController {
 			String list = svc.search(cat, key);
 			return list;
 	}
+	//추천
+	@RequestMapping("good")
+	@ResponseBody
+	public String goodCnt(BoardVO board){
+			boolean ok = svc.goodCnt(board);
+			JSONObject job = new JSONObject();
+			job.put("ok",ok);
+		return job.toJSONString();
+	}
+	//-----------------------------------------
 	
 	
 }
