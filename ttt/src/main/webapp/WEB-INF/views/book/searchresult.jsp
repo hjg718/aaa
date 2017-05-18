@@ -21,8 +21,8 @@
 $(function(){
 	<c:if test="${book.tpg!=null}">
 	$('#pageNav').bootpag({
-        total: ${book.tpg},      
-        page:  ${book.page},           
+        total: "${book.tpg}",      
+        page:  "${book.page}",           
         maxVisible: 5,     
         leaps: true,
         firstLastUse: true,

@@ -226,7 +226,7 @@ enctype="multipart/form-data" method="post" class="form-horizontal" onsubmit="re
       <input type="date" name="pdate" class="form-control" id="pdate" >
     </div>
   </div>
-  
+ 
     <div class="form-group" id="catediv">
     <label class="col-sm-2 control-label">카테고리</label>
     <div class="col-sm-10" id="cate">

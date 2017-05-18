@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="boardPage" parameterType="int" resultMap="empMap">
     	    SELECT num,title,contents,author,currpage,totalpage FROM 
        (
-          SELECT T1.*, FLOOR((ROWNUM-1)/7+1) currpage, CEIL(COUNT(*) OVER()/7) totalpage
+          SELECT T1.*, FLOOR((ROWNUM-1)/10+1) currpage, CEIL(COUNT(*) OVER()/10) totalpage
 		  FROM 
           	(
             	SELECT num, LPAD('└',(LEVEL-1)*2,'　')||title title, author, contents 
