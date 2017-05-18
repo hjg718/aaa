@@ -44,27 +44,6 @@ function re() {
 	   return false;
 	}
 
-function remove(){
-	var param = $("#delete").serialize();
-	$.ajax({
-	 	url:'delete',
-		method:'post',
-		data:param,
-		dataType:'json',
-		success:function(r){
-			if(r){
-			alert('삭제성공');
-			location.href="list";
-			}else {
-				alert("삭제 실패");
-			}
-		},
-		error:function(xhr,status,err){
-			alert("오류발생");
-		}
-	});
-	return false;
-}
 </script>
 
 </head>
@@ -82,9 +61,11 @@ function remove(){
 <br>
 작성날자:${read.bdate}<br>
 <br>
-<sec:authorize access="hasAuthority('ADMIN')">
-<button type="submit" >삭제</button>
-</sec:authorize>
+</form>
+<form id="dpwd" name="dpwd" action="delete" method="GET">
+<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+비밀번호 <input type="password" name="dpwd">
+<button type="submit">삭제하기</button>
 </form>
 </div>
 

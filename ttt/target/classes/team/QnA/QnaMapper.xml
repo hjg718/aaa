@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		title,author,qcontents,bdate,qref,rownum from
 		(select num, title,author,qcontents,bdate,rownum,qref from qna)
 		start with qref=0 connect by prior num=qref
+		order SIBLINGS by num desc
 		)
 		)where page=1
 	</select>

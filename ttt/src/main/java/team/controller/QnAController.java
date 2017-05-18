@@ -101,7 +101,15 @@ public class QnAController {
 		return map;
 	}
 	
-	
+	@RequestMapping(value="delete",method=RequestMethod.GET)
+	public String deleteF(HttpSession session,@RequestParam("dpwd")int pwd){
+		int fpwd = (Integer) session.getAttribute("pwd");
+		if(fpwd != pwd){
+			return "qna/read";
+		}else {
+		return "qna/delete";
+		}
+	}
 	
 	@RequestMapping(value="delete")
 	@ResponseBody
