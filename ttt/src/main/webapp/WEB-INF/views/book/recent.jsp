@@ -191,6 +191,7 @@ ${book.vo.bcontents }
 </div>
 </div>
 </section>
+
 <!--로그아웃  -->
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
