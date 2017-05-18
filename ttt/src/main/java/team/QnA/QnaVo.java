@@ -7,10 +7,26 @@ public class QnaVo {
 	private int num;
 	private String title;
 	private String author;
-	private String contents;
+	private String qcontents;
+	private int pwd;
 	private Date bdate;
-	private int ref;
+	private int ref; 
 	
+	private int page;
+	private int totalpages;
+	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getTotalpages() {
+		return totalpages;
+	}
+	public void setTotalpages(int totalpages) {
+		this.totalpages = totalpages;
+	}
 	public int getNum() {
 		return num;
 	}
@@ -29,11 +45,17 @@ public class QnaVo {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public String getContents() {
-		return contents;
+	public String getQcontents() {
+		return qcontents;
 	}
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setQcontents(String qcontents) {
+		this.qcontents = qcontents;
+	}
+	public int getPwd() {
+		return pwd;
+	}
+	public void setPwd(int pwd) {
+		this.pwd = pwd;
 	}
 	public Date getBdate() {
 		return bdate;

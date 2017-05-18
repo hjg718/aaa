@@ -10,7 +10,6 @@
 <title>Groovin one page bootstrap template</title>
 <!-- styles -->
 
-<link rel="stylesheet" href="<c:url value='/resources/assets/css/fancybox/jquery.fancybox.css'/>">
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
 <link rel="stylesheet" href="<c:url value='/resources/assets/css/slippry.css'/>">
@@ -91,6 +90,7 @@ margin: 500px auto;
 	  	<sec:authorize access="!isAuthenticated()">
         <li><a href="user/join">회원가입</a></li>
         <li><a href="#myModal" data-toggle="modal" >로그인</a></li>
+        <li><a href="qb/list">qna</a></li>
         </sec:authorize>
         <sec:authorize access="hasAuthority('ADMIN')">
 		<li><a href="user/join">매니저계정만들기</a></li>
@@ -101,6 +101,7 @@ margin: 500px auto;
 		<sec:authorize access="isAuthenticated()">
 		<li><a href="${user}">내정보보기</a></li>
 		<li><a href="javascript:logout();">로그아웃</a></li>
+        <li><a href="qb/list">qna</a></li>
 		</sec:authorize>
       </ul></nav>
     </div><!-- /.navbar-collapse -->
@@ -249,6 +250,5 @@ margin: 500px auto;
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 </form>
-<a href="qna/save">QnA</a>
 </body>
 </html>
