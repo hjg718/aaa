@@ -11,7 +11,6 @@ public class Board {
 	
 	//------------------------------------------------
 	
-	
 	public List<BoardVO> getList() {return list;}
 	public void setList(List<BoardVO> list) {this.list = list;}
 	
@@ -20,6 +19,8 @@ public class Board {
 	
 	public int getCurrpage() {return currpage;}
 	public void setCurrpage(int currpage) {this.currpage = currpage;}
+	
+	
 	
 	
 	
