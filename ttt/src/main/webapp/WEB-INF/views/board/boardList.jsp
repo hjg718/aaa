@@ -19,8 +19,8 @@
 function logout(){
 	$("#logout").submit();
 }
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-//페이지 나누기.
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+//페이지 나누기,게시판 첫 화면 1페이지
 $(function() {
 	$('#page-selection').bootpag({
 		total :${total},
@@ -39,9 +39,8 @@ $(function() {
 		firstClass : 'first'
 	}).on("page", function(event, num) { //클릭시 실행된다.
 		var param = {};
-	
 		param.page = num;
-		param.${_csrf.parameterName }='${_csrf.token }';
+		param.${_csrf.parameterName } ='${_csrf.token }';
 		
 		$.ajax({
 			url:'listPage',
@@ -66,7 +65,7 @@ $(function() {
 	});
 });
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-//검색
+//검색(페이지)
 function searched(){
 	
 	var param = $('#searchForm').serialize();
@@ -86,6 +85,51 @@ function searched(){
 				$('#listForm').append("추천: "+res[i].goodcnt);
 				$('#listForm').append("<br>");
 			}
+			$('#page-selection').empty();//기존 페이지네이션을 비운다.
+			$('#page-selection').off('page');//기존 페이지네이션이 on 이고 ,기존꺼를 안쓸려면 off로 한다. 
+			$('#page-selection').bootpag({
+				total : res[0].totalpage,
+				page : res[0].currpage,
+				maxVisible : 5,
+				leaps : true,
+				firstLastUse : true,
+				first : '←',
+				last : '→',
+				wrapClass : 'pagination',
+				activeClass :'active',
+				disabledClass : 'disabled',
+				nextClass : 'next',
+				prevClass : 'prev',
+				lastClass : 'last',
+				firstClass : 'first'
+			}).on("page", function(event, num) { //클릭시 실행된다.
+				var param = {};
+				param.category = $('select[name=category]').val();
+				param.keyword = $('input[name=keyword]').val();
+				param.page = num;
+				param.${_csrf.parameterName } ='${_csrf.token }';
+				
+				$.ajax({
+					url:'search',
+					method:'post',
+					data:param,
+					dataType:'json',
+					success : function(res) {
+						$('#listForm').empty();
+						for(var i = 0 ; i<res.length; i++){
+							$('#listForm').append(res[i].num);
+							$('#listForm').append("<a href = 'info?num=" +res[i].num+ "';>" + res[i].title + "</a>");
+							$('#listForm').append(res[i].author);
+							$('#listForm').append("<a href ='info?readCnt="+res[i].num+"';></a>"+"조회 :"+res[i].readCnt+"-");
+							$('#listForm').append("추천: "+res[i].goodcnt);
+							$('#listForm').append("<br>");
+						}
+					},
+					error : function(xhr, status, err) {
+						alert("오류");
+					}
+				});
+			});
 		},
 		error:function(xhr,status,err){alert("다시 입력해 주세요");}
 	});
@@ -131,14 +175,15 @@ function searched(){
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 <!-- 검색 하기. -->
 <form id="searchForm" onsubmit="return searched();">
-<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-	<select name="category">
-		<option name="num" value="num" >글 번호</option>
-		<option name="title" value="title" selected>글 제목</option>
-		<option name="author" value="author" >작성자</option>
-	</select>
-		<input type="text" name="keyword">
-		 <button type="submit">검색</button>
+	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+	<input type="hidden" name="page" value="1">
+		<select name="category">
+			<option name="num" value="num" >글 번호</option>
+			<option name="title" value="title" >글 제목</option>
+			<option name="author" value="author" selected>작성자</option>
+		</select>
+	<input type="text" name="keyword">
+		<button type="submit">검색</button>
 </form>
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 
@@ -146,7 +191,7 @@ function searched(){
 <!-- 사용 권한 -->
 <!-- 로그인 안된 유저 ( GUEST) 보여지고 사용 가능하도록 한다. -->
 <sec:authorize access="!isAuthenticated()">
-<a href ="user/login">로그인</a>
+	<a href ="user/login">로그인</a>
 </sec:authorize>
 <!--로그인된 회원 , MANAGER , ADMIN이면 , 보여지고 사용 가능하도록 한다. -->
 <sec:authorize access="isAuthenticated()">
@@ -158,7 +203,7 @@ function searched(){
 <p>
  <a href="index.jsp">메인 페이지 바로 가기</a>
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-<!-- 로그 아웃 security가 자동으로 처리한다.-->
+<!-- 로그 아웃은 security가 자동으로 처리한다.-->
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->

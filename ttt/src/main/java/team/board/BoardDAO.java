@@ -19,15 +19,10 @@ public interface BoardDAO {
 	public void goodCntUser(BoardVO board);//추천인 저장
 	public List<BoardVO> goodUserList(BoardVO board);//추천한 아이디와 추천글 리스트 
 	
-	public List<BoardVO> search
-	(@Param("category") String cat,@Param("keyword") String key); //검색
+	public List<BoardVO> search(
+	@Param("category") String cat,@Param("keyword") String key, @Param("page") int page ); //검색
 	
 	
-	
-	
-	
-	
-
 
 
 	

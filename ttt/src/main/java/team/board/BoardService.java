@@ -24,15 +24,6 @@ public class BoardService {
 	public List<BoardVO> goodList(){
 		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
 		List<BoardVO> list = dao.goodList();
-		
-/*		for(int i = 0 ;i<list.size() ; i++){
-			list.get(i).getNum();
-			System.out.println("num:"+list.get(i).getNum());
-			list.get(i).getTitle();
-			System.out.println("title"+list.get(i).getTitle());
-			list.get(i).getAuthor();
-			System.out.println("author:"+list.get(i).getAuthor());
-		}*/
 		return list;
 	}
 	//페이지 번호 클릭
@@ -82,17 +73,20 @@ public class BoardService {
 		return ok;
 	}
 	//검색
-	public String search(String cat, String key) {
+	public String search(String cat, String key, int page) {
 		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
-		List<BoardVO> list = dao.search(cat,key);
-
+		System.out.println("cat: "+cat);
+		List<BoardVO> list = dao.search(cat,key, page);
 		JSONArray jar = new JSONArray();
 		for(int i = 0 ; i<list.size(); i++){
-
 			JSONObject job = new JSONObject();
 			job.put("num", list.get(i).getNum());
 			job.put("title",list.get(i).getTitle());
 			job.put("author",list.get(i).getAuthor());
+			job.put("currpage",list.get(i).getCurrpage());
+			job.put("totalpage",list.get(i).getTotalpage());
+			job.put("readCnt",list.get(i).getReadCnt());
+			job.put("goodcnt",list.get(i).getGoodcnt());
 			jar.add(job);
 		}		
 		return jar.toJSONString();
@@ -100,7 +94,7 @@ public class BoardService {
 	//조회수
 	public void readCnt(BoardVO boardvo) {
 		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
-		int cnt = boardvo.getReadCnt();
+		int cnt = boardvo.getReadCnt();//조회수 +1
 		boardvo.setReadCnt(cnt);
 		dao.readCnt(boardvo);
 	}
@@ -112,32 +106,27 @@ public class BoardService {
 
 		String goodId= board.getGoodname();
 		int goodNum = board.getGoodnum();
-		System.out.println("추천한 아이디 goodname에 저장: "+goodId+","+"추천한 글 번호 goodnum에 저장: "+goodNum);
 
 		List<BoardVO> list = dao.goodUserList(board);
 
+		//처음에 글에서 추천누르면 유저의 아이디가 DB테이블에 없으므로 if문 시작
 		if(list.size() == 0){
 			good=true;
 		}
 		else{
 			for(int i = 0 ; i<list.size();i++){
-				System.out.println("아이디 :"+list.get(i).getGoodname());
-				System.out.println("글번호 :"+list.get(i).getGoodnum());
 				//글번호와 리스트에서 가져온 글번호가 같으면
 				if(goodNum == list.get(i).getGoodnum()){
-					System.out.println("goodNum if:"+goodNum+"리시트num"+list.get(i).getGoodnum());
-					System.out.println("for-if(good) : "+good);
 					good=false;
 				}
 			}
-		}//else
-		System.out.println("추천결과값:"+good);
+		}
 		if(good){
 			System.out.println("if(good) : "+good);
-			int n = dao.goodCnt(board); //추천수
+			int n = dao.goodCnt(board); //추천수 +1 하기
 			if(n>0){
 				ok = true;
-				dao.goodCntUser(board);		// 로그인된 아이디와, 글번호를 저장
+				dao.goodCntUser(board); // 로그인된 아이디와, 글번호를 저장
 				return ok;
 			}
 		}

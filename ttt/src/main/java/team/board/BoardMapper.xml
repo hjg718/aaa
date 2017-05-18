@@ -22,14 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</collection>
 		</resultMap>
 		
-<!-- 		<resultMap id="cnt" type="team.board.Board">
-		<collection property="list" column="goodname" javaType="ArrayList" 
-					ofType="team.board.BoardVO">
-			<id property="goodname" column="goodname"/>
-			<result property="goodnum" column="goodnum"/>
-		</collection>
-		</resultMap> -->
-		
 <!-- 	</resultMap> -->
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 	<select id="boardPage" parameterType="int" resultMap="empMap">
@@ -99,19 +91,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert> 
 	<!-- 검색 -->
 	<select id="search" resultType="team.board.BoardVO">
-		 select * from fboard 
-        	<if test="category == 'num' ">
-        		where num = #{keyword}
-        	</if>
-        	
-        	<if test="category == 'title' ">
-        		where title like '%' ||  #{keyword} || '%'
-
-        	</if>
-        	
-        	<if test="category == 'author' ">
-        		where  author like  '%'||#{keyword}||'%'
-        	</if>
+		 select * from (
+        	SELECT T1.*, FLOOR((ROWNUM-1)/7+1) currpage, CEIL(COUNT(*) OVER()/7) totalpage
+		  	FROM 
+          	(
+            	SELECT num,LPAD('└',(LEVEL-1)*2,'　')||title title, 
+            	author, contents,readcnt,goodcnt 
+            	FROM fboard 
+            	where ${category} like '%'||#{keyword}||'%'
+             	START WITH ref=0  
+             	CONNECT BY PRIOR num=ref
+             	order SIBLINGS by num desc
+             	             	 
+          	) T1 
+       ) where currpage = #{page}
 	</select>
 
 	

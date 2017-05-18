@@ -14,6 +14,8 @@ public class BoardVO {
 	private int goodcnt; // 추천수
 	private String goodname; //추천인(추천 눌렀을때 추천한 아이디 저장)
 	private int goodnum;//추천한 글번호
+	private int currpage;
+	private int totalpage;
 	
 	//------------------------------
 	public int getNum() {return num;}
@@ -46,7 +48,11 @@ public class BoardVO {
 	public int getGoodnum() {return goodnum;}
 	public void setGoodnum(int goodnum) {this.goodnum = goodnum;}
 	
+	public int getCurrpage() {return currpage;}
+	public void setCurrpage(int currpage) {this.currpage = currpage;}
 	
+	public int getTotalpage() {return totalpage;}
+	public void setTotalpage(int totalpage) {this.totalpage = totalpage;}
 	
 	
 }

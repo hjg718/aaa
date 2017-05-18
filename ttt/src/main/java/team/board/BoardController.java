@@ -26,7 +26,8 @@ public class BoardController {
 		model.addAttribute("total",b.getTotalpage());
 		model.addAttribute("curr", b.getCurrpage());
 		model.addAttribute("boardlist",list);
-		List<BoardVO> goodList =svc.goodList();
+		
+		List<BoardVO> goodList =svc.goodList();//추천수가 많은 리스트
 		model.addAttribute("goodlist",goodList);
 		return "board/boardList";
 	}
@@ -102,8 +103,9 @@ public class BoardController {
 	@RequestMapping("search")
 	@ResponseBody
 	public String search(Model model,@RequestParam("category") String cat,
-									 @RequestParam("keyword") String key){
-			String list = svc.search(cat, key);
+									 @RequestParam("keyword") String key,
+									 @RequestParam("page") int page){
+			String list = svc.search(cat, key, page);
 			return list;
 	}
 	//추천
