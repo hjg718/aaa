@@ -9,7 +9,6 @@
 <meta charset="utf-8">
 <title>Groovin one page bootstrap template</title>
 <!-- styles -->
-
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
 <link rel="stylesheet" href="<c:url value='/resources/assets/css/slippry.css'/>">
