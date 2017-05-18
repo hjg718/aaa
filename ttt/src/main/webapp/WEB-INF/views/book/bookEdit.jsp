@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8" trimDirectiveWhitespaces="true"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+    <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+    <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>도서등록</title>
+<title>도서 수정</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <c:url var="url" value="/resources/jquery.bootpag.min.js" />
 <script src="${url }"></script>
@@ -17,11 +18,14 @@
 <script src="<c:url value='/resources/assets/js/bootstrap.js'/>"></script>
 <script>
 $(function(){
+	if(${error==true}){
+		$("#bookFormBody").text("정보수정을 실패했습니다.");
+		$('#bookForm').modal('show');
+	}
+	
 	$("#cover").change(function(e){
 		var reader = new FileReader();
 		reader.onload = function (e){
-			$("#cover").css("width","70%");
-			$("#coverimg").css("display","inline")
 			document.getElementById("coverimg").src= reader.result; 
 		}
 		reader.readAsDataURL(this.files[0]);
@@ -31,7 +35,6 @@ function logout() {
 	$("#logout").submit();
 }
 function re() {
-	$('#coverdiv').removeClass("has-error");
 	$('#bnamediv').removeClass("has-error");
 	$('#authordiv').removeClass("has-error");
 	$('#bindexdiv').removeClass("has-error");
@@ -40,19 +43,13 @@ function re() {
 	$('#pdatediv').removeClass("has-error");
 	$('#catediv').removeClass("has-error");
 	var check = false;
-	for(var i=0;i<$("[name=cate]").length;i++){
-		if($("[name=cate]")[i].checked){
+	for(var i=0;i<$(".cate").length;i++){
+		if($(".cate")[i].checked){
 			check=true;
 		}
 	}
 	
-	if($("#cover").val()==""){
-		$("#bookFormBody").text("도서 표지를 입력해주세요.");
-		$('#bookForm').modal('show');
-		$('#coverdiv').addClass("has-error");
-		return false;
-	}
-	else if($("#bname").val()==""){
+	if($("#bname").val()==""){
 		$("#bookFormBody").text("도서 제목을 입력해주세요.");
 		$('#bookForm').modal('show');
 		$('#bnamediv').addClass("has-error");
@@ -94,7 +91,7 @@ function re() {
 		$('#catediv').addClass("has-error");
 		return false;
 	}
-	return true
+	return true;
 }
 </script>
 <style>
@@ -103,10 +100,9 @@ text-align: left;
 }
 #cover{
 display: inline-block;
+width: 70%;
 }
-#coverimg{
-display: none;
-}
+
 </style>
 </head>
 <body>
@@ -171,59 +167,60 @@ display: none;
 <div class="row">
 <div class="col-md-8 col-md-offset-2">
 <div class="heading">
-<h3> 도서 정보 입력</h3>
+<h3> 도서 정보 수정</h3>
 </div>
 <P></P>
 <div id="inputCon">
-<form action="addbook?${_csrf.parameterName }=${_csrf.token }"
+
+<form:form commandName="book.vo" action="edit?${_csrf.parameterName }=${_csrf.token }"
 enctype="multipart/form-data" method="post" class="form-horizontal" onsubmit="return re();">
- 
+  <form:hidden path="bnum"/>
  <div class="form-group" id="coverdiv">
     <label for="cover" class="col-sm-2 control-label">표지</label>
     <div class="col-sm-10">
-    <img src="" width="29%" height="170px" id="coverimg" class="img-rounded">
-      <input type="file" class="form-control" id="cover" name="cover">
+    <img src="<c:url value="/book/img?coverName=${book.vo.coverName}"/>" width="29%" height="170px" id="coverimg" class="img-rounded">
+      <form:input path="cover" type="file" class="form-control" id="cover" />
     </div>
   </div>
   
 <div class="form-group" id="bnamediv">
     <label for="bname" class="col-sm-2 control-label">도서 제목</label>
     <div class="col-sm-10">
-      <input type="text" name="bname" class="form-control" id="bname" placeholder="도서 제목을 입력해주세요">
+      <form:input path="bname" class="form-control" id="bname" placeholder="도서 제목을 입력해주세요"/>
     </div>
   </div>
 <div class="form-group" id="authordiv">
     <label for="author" class="col-sm-2 control-label">저자</label>
     <div class="col-sm-10">
-      <input type="text" name="author" class="form-control" id="author" placeholder="저자를 입력해주세요">
+      <form:input path="author" class="form-control" id="author" placeholder="저자를 입력해주세요"/>
     </div>
   </div>
   
 <div class="form-group" id="bindexdiv">
     <label for="bindex" class="col-sm-2 control-label">목차</label>
     <div class="col-sm-10">
-    <textarea  class="form-control" rows="5" style="resize: none;"  name="bindex" id="bindex" placeholder="목차를 입력해주세요"></textarea>
+    <form:textarea path="bindex" class="form-control" rows="5" style="resize: none;" id="bindex" placeholder="목차를 입력해주세요" />
     </div>
   </div>
   
   <div class="form-group" id="publisherdiv">
     <label for="publisher" class="col-sm-2 control-label">출판사</label>
     <div class="col-sm-10">
-      <input type="text" name="publisher" class="form-control" id="publisher" placeholder="출판사를 입력해주세요">
+      <form:input path="publisher" class="form-control" id="publisher" placeholder="출판사를 입력해주세요"/>
     </div>
   </div>
   
   <div class="form-group" id="bcontentsdiv">
     <label for="bcontents" class="col-sm-2 control-label">상세내용</label>
     <div class="col-sm-10">
-    <textarea  class="form-control" rows="5" style="resize: none;"  name="bcontents" id="bcontents" placeholder="상세내용을 입력해주세요"></textarea>
+    <form:textarea path="bcontents" class="form-control" rows="5" style="resize: none;" id="bcontents" placeholder="상세내용을 입력해주세요" />
     </div>
   </div>
   
     <div class="form-group" id="pdatediv">
     <label for="pdate" class="col-sm-2 control-label">출판일</label>
     <div class="col-sm-10">
-      <input type="date" name="pdate" class="form-control" id="pdate" >
+    <form:input path="pdate" type="date" class="form-control" id="pdate" />
     </div>
   </div>
   
@@ -232,59 +229,59 @@ enctype="multipart/form-data" method="post" class="form-horizontal" onsubmit="re
     <div class="col-sm-10" id="cate">
    
   	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="소설"> 소설
+  	<form:checkbox path="cate" class="cate" value="소설" label="소설" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="에세이">에세이
+	<form:checkbox path="cate" class="cate" value="에세이" label="에세이" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="시">시
+	<form:checkbox path="cate" class="cate" value="시" label="시" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="수필">수필
+	<form:checkbox path="cate" class="cate" value="수필" label="수필" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="자서전">자서전
+	<form:checkbox path="cate" class="cate" value="자서전" label="자서전" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="여행">여행
+	<form:checkbox path="cate" class="cate" value="여행" label="여행" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="사회/이슈">사회/이슈
+	<form:checkbox path="cate" class="cate" value="사회/이슈" label="사회/이슈" />
 	</label>
 	<br>
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="과학">과학
+	<form:checkbox path="cate" class="cate" value="과학" label="과학" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="위인/전기">위인/전기
+	<form:checkbox path="cate" class="cate" value="위인/전기" label="위인/전기" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="기술서">기술서
+	<form:checkbox path="cate" class="cate" value="기술서" label="기술서" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="만화">만화
+	<form:checkbox path="cate" class="cate" value="만화" label="만화" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate"  value="요리">요리
+	<form:checkbox path="cate" class="cate" value="요리" label="요리" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="음악">음악
+	<form:checkbox path="cate" class="cate" value="음악" label="음악" />
 	</label>
 	
 	<label class="checkbox-inline">
-  	<input type="checkbox" name="cate" value="학습서">학습서
+	<form:checkbox path="cate" class="cate" value="학습서" label="학습서" />
 	</label>
 	 <div class="help-block">중복 선택 가능합니다.</div>
     </div>
@@ -293,7 +290,7 @@ enctype="multipart/form-data" method="post" class="form-horizontal" onsubmit="re
 <button type="submit" class="btn btn-theme">저장하기</button>
 <button type="reset" class="btn btn-theme">다시 작성하기</button>
 </div>
-</form>
+</form:form>
 </div>
 </div>
 </div>

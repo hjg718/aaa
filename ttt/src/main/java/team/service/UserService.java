@@ -96,6 +96,7 @@ public class UserService {
 		if (pass) {
 			int row = dao.secession(userid);
 			if (row > 0) {
+				dao.removeBooking(userid);
 				jobj.put("pass", true);
 			} else {
 				jobj.put("pass", false);

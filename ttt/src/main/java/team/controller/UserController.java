@@ -76,6 +76,9 @@ public class UserController {
 			model.addAttribute("info", svc.getinfo(vo.getUserid()));
 			return "user/info";
 		}
+		UserVo userVo = svc.getvo(vo.getUserid());
+		model.addAttribute("userVo", userVo);
+		model.addAttribute("error", true);
 		return "user/edit";
 	}
 	

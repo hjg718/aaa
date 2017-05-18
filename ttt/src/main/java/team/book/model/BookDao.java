@@ -36,5 +36,13 @@ public interface BookDao {
 	public BookVo read(int bnum);
 
 	public int cancel(int num);
+
+	public int edit(BookVo vo);
+
+	public List<String> getcate(int bnum);
+
+	public void removeCate(@Param("bnum")int bnum, @Param("cate")String cate);
+
+	public int delete(int booknum);
 	
 }

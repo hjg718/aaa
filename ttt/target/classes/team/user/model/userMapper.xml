@@ -24,7 +24,7 @@
 	</update>
 	
 	<update id="secession">
-	UPDATE puser SET enabled = 0 WHERE userid = #{userid}
+		UPDATE puser SET enabled = 0 WHERE userid = #{userid}
 	</update>
 	
 	<select id="getvo" resultType="team.user.model.UserVo">
@@ -62,4 +62,8 @@
 		SELECT rentaldate FROM rental WHERE booknum = #{booknum} AND return = 1
 	</select>
 
+	<delete id="removeBooking">
+		DELETE FROM booking WHERE bookinguser = #{userid}
+	</delete>
+	
 </mapper>

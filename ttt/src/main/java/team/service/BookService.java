@@ -76,11 +76,7 @@ public class BookService {
 		return false;
 	}
 
-	public BookVo recent(int bnum) {
-		BookDao dao = sqlST.getMapper(BookDao.class);
-		BookVo book = dao.read(bnum);
-		return book;
-	}
+	
 
 	public String searchPage(String keyword, String category, int page) {
 		BookDao dao = sqlST.getMapper(BookDao.class);
@@ -137,12 +133,12 @@ public class BookService {
 		return jobj.toJSONString();
 	}
 
-	public String returnBook(int num,String id) {
+	public String returnBook(int num,String userid) {
 		BookDao dao = sqlST.getMapper(BookDao.class);
 		JSONObject jobj = new JSONObject();
 		int row = dao.returnBook(num);
 		if(row>0){
-			dao.decCurrbook(id);
+			dao.decCurrbook(userid);
 			jobj.put("pass", true);
 		}
 		return jobj.toJSONString();
@@ -186,6 +182,94 @@ public class BookService {
 			}
 		}
 		else jobj.put("pass", false);
+		return jobj.toJSONString();
+	}
+
+	public boolean edit(BookVo vo) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		MultipartFile file = vo.getCover();
+		if(file.getSize()==0){
+			int row = dao.edit(vo);
+			if(row>0){
+				List<String> newCate = vo.getCate();
+				List<String> saveCate = dao.getcate(vo.getBnum());
+				for(int i=0;i<saveCate.size();i++){
+					boolean ok = false;
+					for(int j = newCate.size()-1; j>=0;j--){
+						if(saveCate.get(i).equals(newCate.get(j))){
+							newCate.remove(j);
+							ok=true;
+						}
+					}
+					if(!ok){
+						dao.removeCate(vo.getBnum(),saveCate.get(i));
+					}
+				}
+				for(int i=0;i<newCate.size();i++){
+					dao.addcate(vo.getBnum(),newCate.get(i));
+				}
+				return true;
+			}
+		}
+		if(file.getSize() != 0){
+			InputStream ins = null;
+			OutputStream ous = null;
+			try {
+				String[] name= file.getOriginalFilename().split("\\.");
+				String coverName= vo.getBnum()+"."+name[1];
+				vo.setCoverName(coverName);
+				ins = file.getInputStream();
+				File f = new File("D:/upload/"+coverName);
+				byte[] buf = new byte[1024];
+				int read = 0;
+				ous = new FileOutputStream(f);
+				while((read=ins.read(buf))!=-1){
+					ous.write(buf, 0, read);
+					ous.flush();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					ins.close();
+					ous.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			int row = dao.edit(vo);
+			if(row>0){
+				List<String> newCate = vo.getCate();
+				List<String> saveCate = dao.getcate(vo.getBnum());
+				for(int i=0;i<saveCate.size();i++){
+					boolean ok = false;
+					for(int j = newCate.size()-1; j>=0;j--){
+						if(saveCate.get(i).equals(newCate.get(j))){
+							newCate.remove(j);
+							ok=true;
+						}
+					}
+					if(!ok){
+						dao.removeCate(vo.getBnum(),saveCate.get(i));
+					}
+				}
+				for(int i=0;i<newCate.size();i++){
+					dao.addcate(vo.getBnum(),newCate.get(i));
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public String delete(int booknum) {
+		BookDao dao = sqlST.getMapper(BookDao.class);
+		int row = dao.delete(booknum);
+		JSONObject jobj = new JSONObject();
+		if(row>0){
+			jobj.put("pass", true);
+		}
+		else jobj.put("pass", false); 
 		return jobj.toJSONString();
 	}
 }

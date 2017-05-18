@@ -106,4 +106,26 @@
 		DELETE FROM booking WHERE num=#{num}
 	</delete>
 	
+	<update id="edit" parameterType="team.book.model.BookVo">
+		UPDATE book
+		<set>
+			<if test="coverName!=null">covername = #{coverName},</if>
+			bname = #{bname}, bindex = #{bindex}, author = #{author}, 
+			publisher = #{publisher}, pdate =#{pdate},bcontents = #{bcontents}
+		</set>
+		WHERE bnum = #{bnum}
+	</update>
+	
+	<select id="getcate" resultType="String">
+		SELECT cate FROM category WHERE bnum = #{bnum}
+	</select>
+	
+	<delete id="removeCate">
+		DELETE FROM category WHERE bnum = #{bnum} AND cate = #{cate}
+	</delete>
+	
+	<delete id="delete">
+		DELETE FROM book WHERE bnum = #{bnum}
+	</delete>
+	
 </mapper>

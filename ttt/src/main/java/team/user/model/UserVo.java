@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class UserVo {
 	
-	@Size(min=1,max=10, message="1~10자로 입력해주세요")
+	@Size(min=3,max=16, message="1~10자로 입력해주세요")
 	private String userid;
 	@NotEmpty(message="필수입력 항목입니다")
 	private String upwd;

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>검색결과</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <c:url var="url" value="/resources/jquery.bootpag.min.js" />
 <script src="${url }"></script>
@@ -61,13 +61,13 @@ $(function(){
     				tbody.append(tr);
     				
     				tr =$("<tr></tr>");
-    				td = $("<td class='cell author'><a href='javascript:clickSearch('author','"+res[i].author+"');'>"+res[i].author+"</a></td>");
+    				td = $("<td class='cell author'><a href=\"javascript:clickSearch('author','"+res[i].author+"');\">"+res[i].author+"</a></td>");
     				tr.append(td);
     				tbody.append(tr);
     				
     				tr = $("<tr></tr>");
-    				td = $("<td class='cell publisher'><a href='javascript:clickSearch('publisher',"
-    						+"'"+res[i].publisher+"');'>"+res[i].publisher+"</a></td>");
+    				td = $("<td class='cell publisher'><a href=\"javascript:clickSearch('publisher',"
+    						+"'"+res[i].publisher+"');\">"+res[i].publisher+"</a></td>");
     				tr.append(td);
     				tbody.append(tr);
     				table.append(tbody);
@@ -102,16 +102,6 @@ function clickSearch(category,keyword) {
 }
 </script>
 <style>
-.default {
-	background: #010101;
-	opacity: 1;
-}
-#searchForm{
-	margin-left: 100px;
-}
-#key{
-	width: 350px;
-}
 .cell{
 	width: 550px;
 	text-align: center;
@@ -124,9 +114,6 @@ function clickSearch(category,keyword) {
 }
 .table{
 border-bottom: 1px solid #ddd;
-}
-.section{
-min-height: 950px;
 }
 </style>
 </head>
@@ -148,8 +135,34 @@ min-height: 950px;
 					<div class="collapse navbar-collapse"
 						id="bs-example-navbar-collapse-1">
 						<nav>
-							<form action="search" method="post" onsubmit="return check();"
-							class="navbar-form navbar-left" id="searchForm">
+						
+						<ul class="nav navbar-nav navbar-left">
+						<sec:authorize access="hasAuthority('ADMIN')">
+									<li><a href="<c:url value="/user/join"/>">매니저계정만들기</a></li>
+								</sec:authorize>
+								<sec:authorize access="hasAnyAuthority('MANAGER','ADMIN')">
+									<li><a href="<c:url value="/book/add"/>">도서등록</a></li>
+								</sec:authorize>
+					</ul>
+						<ul class="nav navbar-nav navbar-right" id="mynav">
+								<sec:authentication var="id" property="name" />
+								<c:url var="user" value="/user/info">
+									<c:param name="id" value="${id }" />
+								</c:url>
+								<sec:authorize access="!isAuthenticated()">
+									<li><a href="#myModal" data-toggle="modal">로그인</a></li>
+									<li><a href="<c:url value="/user/join"/>">회원가입</a></li>
+								</sec:authorize>
+								<sec:authorize access="isAuthenticated()">
+									<li><a href="javascript:logout();">로그아웃</a></li>
+									<li><a href="${user}">내정보보기</a></li>
+								</sec:authorize>
+								 <li><a>Q&amp;A게시판</a></li>
+								 <li><a>자유게시판</a></li>
+							</ul>
+					
+							<form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"
+							class="navbar-form navbar-right" id="searchForm">
 								<input type="hidden" name="${_csrf.parameterName }"
 									value="${_csrf.token }"> 
 									<select name="category" class="form-control input-lg">
@@ -158,28 +171,9 @@ min-height: 950px;
 									<option value="publisher">출판사</option>
 								</select> 
 								<input type="text" name="keyword" id="key" class="form-control input-lg" placeholder="도서정보를 입력해주세요">
-								<button type="submit" class="btn btn-success" >검색</button>
+								<button type="submit" class="btn btn-theme" >검색</button>
 							</form>
-							<ul class="nav navbar-nav navbar-right">
-								<sec:authentication var="id" property="name" />
-								<c:url var="user" value="/user/info">
-									<c:param name="id" value="${id }" />
-								</c:url>
-								<sec:authorize access="!isAuthenticated()">
-									<li><a href="<c:url value="/user/join"/>">회원가입</a></li>
-									<li><a href="#myModal" data-toggle="modal">로그인</a></li>
-								</sec:authorize>
-								<sec:authorize access="hasAuthority('ADMIN')">
-									<li><a href="<c:url value="/user/join"/>">매니저계정만들기</a></li>
-								</sec:authorize>
-								<sec:authorize access="hasAnyAuthority('MANAGER','ADMIN')">
-									<li><a href="<c:url value="/book/add"/>">도서등록</a></li>
-								</sec:authorize>
-								<sec:authorize access="isAuthenticated()">
-									<li><a href="${user}">내정보보기</a></li>
-									<li><a href="javascript:logout();">로그아웃</a></li>
-								</sec:authorize>
-							</ul>
+							
 						</nav>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -195,7 +189,7 @@ min-height: 950px;
 				<h3><span>검색 결과</span></h3>
 			</div>
 			<br>
-				<c:if test="${book==nill }">
+				<c:if test="${book==null }">
 				<div class="sub-heading">
 				<p>
 					 해당 검색어에 해당하는 도서가 없습니다.
@@ -210,9 +204,6 @@ min-height: 950px;
 							 <a href="read?bnum=${vo.bnum}" class="thumbnail">
      							<img src="<c:url value="/book/img?coverName=${vo.coverName}"/>" />
    							 </a>
-							<a href="read?bnum=${vo.bnum}">
-							
-							</a>
 							</td>
 							<td class="cell bname" ><a href="read?bnum=${vo.bnum}">${vo.bname }</a></td>
 						</tr>
@@ -265,20 +256,29 @@ min-height: 950px;
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title" id="myModalLabel">로그인</h4>
 				</div>
-				<form action='<c:url value="/user/login"/>' method="post"
-					id="loginForm">
-					<div class="modal-body">
-						<input type="hidden" name="${_csrf.parameterName }"
-							value="${_csrf.token }">
-							 ID <input type="text" name="id"> 
-							PWD <input type="password" name="pwd">
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">로그인</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
+				<form  action='<c:url value="/user/login"/>' class="form-horizontal" method="post" id="loginForm"> 
+		     	<div class="modal-body">
+				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+				<div class="form-group">
+			    <label for="id" class="col-sm-2 control-label">ID</label>
+			    <div class="col-sm-10">
+			    <input type="text" class="form-control" name="id" id="id">
+			    </div>
+			    </div>
+			    
+			    <div class="form-group">
+			    <label for="pwd" class="col-sm-2 control-label">Password</label>
+			    <div class="col-sm-10">
+			    <input type="password" class="form-control" name="pwd" id="pwd">
+			    </div>
+			    </div>
+		        </div>
+		        <div class="modal-footer">
+		     	<button type="submit"  class="btn btn-success">로그인</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		        </div>
 				</form>
 			</div>
 		</div>

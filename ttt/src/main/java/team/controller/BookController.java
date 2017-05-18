@@ -11,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.sun.xml.internal.ws.developer.MemberSubmissionAddressing;
 
 import team.book.model.Book;
 import team.book.model.BookVo;
@@ -49,10 +52,10 @@ public class BookController {
 		return "book/add";
 	}
 	@RequestMapping("addbook")
-	public String add(BookVo vo,Model model,HttpSession session){
+	public String add(BookVo vo,Model model){
 		boolean pass = svc.add(vo);
 		if(pass){
-			BookVo book = svc.recent(vo.getBnum());
+			Book book = svc.read(vo.getBnum());
 			model.addAttribute("book", book);
 		}
 		return "book/recent";
@@ -83,8 +86,8 @@ public class BookController {
 	
 	@RequestMapping("returnBook")
 	@ResponseBody
-	public String returnBook(@RequestParam("num")int num,@RequestParam("id") String id){
-		String pass= svc.returnBook(num,id);
+	public String returnBook(@RequestParam("num")int num,@RequestParam("userid") String userid){
+		String pass= svc.returnBook(num,userid);
 		return pass;
 	}
 	
@@ -103,9 +106,37 @@ public class BookController {
 	@RequestMapping("bookingrental")
 	@ResponseBody
 	public String bookingrental(@RequestParam("booknum")int booknum,
-			@RequestParam("bookoingnum")int bookingnum,@RequestParam("userid") String userid){
+			@RequestParam("bookingnum")int bookingnum,@RequestParam("userid") String userid){
 		String pass = svc.bookingrental(booknum,bookingnum,userid);
 		return pass;
 	}
 	
+	@RequestMapping(value="edit", method=RequestMethod.GET)
+	public ModelAndView edit(@RequestParam("bnum")int bnum){
+		Book book = svc.read(bnum);
+		return new ModelAndView("book/bookEdit","book",book);
+	}
+	
+	@RequestMapping(value="edit", method=RequestMethod.POST)
+	public String edit(Book book,Model model){
+		boolean pass = svc.edit(book.getVo());
+		if(pass){
+			Book newBook = svc.read(book.getVo().getBnum());
+			model.addAttribute("book", newBook);
+		}
+		else{
+			Book newBook = svc.read(book.getVo().getBnum());
+			model.addAttribute("error", true);
+			model.addAttribute("book", newBook);
+			return "book/bookEdit";
+		}
+		return "book/recent";
+	}
+	
+	@RequestMapping("delete")
+	@ResponseBody
+	public String delete(@RequestParam("booknum") int booknum){
+		String pass= svc.delete(booknum);
+		return pass;
+	}
 }

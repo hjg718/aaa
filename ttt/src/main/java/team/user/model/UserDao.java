@@ -20,5 +20,6 @@ public interface UserDao {
 	public List<BookingVo> booking(String id);
 	public List<RentalVo> rental(String userid);
 	public Date rentalCheck(int booknum);
+	public int removeBooking(String userid);
 
 }
