@@ -18,7 +18,7 @@ import team.QnA.QnaVo;
 import team.service.QnaService;
 
 @Controller
-@RequestMapping("qb/")
+@RequestMapping("qna/")
 public class QnAController {
 	
 	@Autowired
@@ -48,11 +48,9 @@ public class QnAController {
 		}
 	
 	@RequestMapping(value="list")
-	public String list(QnaVo vo,Model model,HttpSession session){
+	public String list(QnaVo vo,Model model){
 		ArrayList<QnaVo> list = svc.List();
 		model.addAttribute("list",list);
-		session.setAttribute("curr",1);
-		session.setAttribute("total",list.get(0).getTotalpages());
 		return "qna/list"; 
 	}
 	

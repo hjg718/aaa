@@ -11,7 +11,6 @@ public class QnaVo {
 	private int pwd;
 	private Date bdate;
 	private int ref; 
-	
 	private int page;
 	private int totalpages;
 	

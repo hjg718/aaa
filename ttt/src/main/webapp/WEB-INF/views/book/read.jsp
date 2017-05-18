@@ -242,7 +242,7 @@ white-space: pre-line;
 <c:when test="${book.rentaluser!=id }">
 <div class="panel panel-warning">
 <div class="panel-heading">
-<h4 class="panel-title">이도서는 대여중(예약중)입니다.</h4>
+<h4 class="panel-title">이도서는 대여중 (예약중) 입니다.</h4>
 </div>
 <div class="panel-body">
 <c:choose>

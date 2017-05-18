@@ -8,8 +8,6 @@
 <meta charset="utf-8">
 <title>회원 정보보기</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-<c:url var="url" value="/resources/jquery.bootpag.min.js" />
-<script src="${url }"></script>
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/style.css'/>" rel="stylesheet" />
