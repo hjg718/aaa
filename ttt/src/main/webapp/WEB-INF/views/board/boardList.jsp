@@ -5,15 +5,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<script src="<c:url value='/resources/jquery-2.2.4.min.js'/>"></script>
-<script src="<c:url value='/resources/jquery.bootpag.min.js'/>"></script>
-<script src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <meta charset="utf-8">
-
 <title>게시판 리스트</title>
-
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="<c:url value="/resources/jquery.bootpag.min.js" />"></script>
+<link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/assets/css/style.css'/>" rel="stylesheet" />
+<link rel="stylesheet" href="<c:url value='/resources/assets/color/default.css'/>">
+<script src="<c:url value='/resources/assets/js/bootstrap.js'/>"></script>
 <script type="text/javascript">
 //로그아웃
 function logout(){
@@ -21,10 +21,10 @@ function logout(){
 }
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 //페이지 나누기,게시판 첫 화면 1페이지
-$(function() {
+$(function(){
 	$('#page-selection').bootpag({
-		total :${total},
-		page : ${curr},
+		total :"${total}",
+		page : "${curr}",
 		maxVisible : 5,
 		leaps : true,
 		firstLastUse : true,

@@ -1,4 +1,4 @@
-package team.QnA;
+package team.QnA.model;
 
 import java.util.List;
 

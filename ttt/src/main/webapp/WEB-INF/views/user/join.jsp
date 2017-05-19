@@ -168,7 +168,7 @@ color: red;
 </style>
 </head>
 <body>
-<sec:authentication var="id" property="name" />
+
 	<header>
 		<div id="navigation"class="navbar navbar-inverse navbar-fixed-top default"role="navigation">
 			<div class="container">
@@ -193,6 +193,7 @@ color: red;
 						</ul>
 						<ul class="nav navbar-nav navbar-right" id="mynav">
 						<sec:authorize access="hasAuthority('ADMIN')">
+						<sec:authentication var="id" property="name" />
 						<c:url var="user" value="/user/info">
 						<c:param name="id" value="${id }" />
 						</c:url>
@@ -296,8 +297,8 @@ color: red;
 <input type="hidden" name="authority" value="MANAGER">
 </sec:authorize>
 <div id="bset">
- <button type="submit" class="btn btn-theme">작성완료</button>
- <button type="reset" class="btn btn-theme">다시 작성하기</button>
+ <button type="submit" class="btn btn-theme">작성 완료</button>
+ <button type="reset" class="btn btn-theme">다시 작성</button>
 </div>
 </form:form>
 </div>
@@ -307,9 +308,8 @@ color: red;
 </section>
 <!--로그아웃  -->
 <form action="<c:url value="/logout"/>" method="post" id="logout">
-		<input type="hidden" name="${_csrf.parameterName }"
-			value="${_csrf.token }">
-	</form>
+<input type="hidden" name="${_csrf.parameterName }"	value="${_csrf.token }">
+</form>
 	
 <!--검색어 모달  -->
 <div class="modal fade" id="input" tabindex="-1"
@@ -325,6 +325,44 @@ color: red;
 					확인
 				</button>
 				</div>
+			</div>
+		</div>
+	</div>
+	
+<!--로그인  -->
+	<div class="modal fade" id="myModal" tabindex="-1"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">로그인</h4>
+				</div>
+				<form  action='<c:url value="/user/login"/>' class="form-horizontal" method="post" id="loginForm"> 
+		     	<div class="modal-body">
+				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+				<div class="form-group">
+			    <label for="id" class="col-sm-2 control-label">ID</label>
+			    <div class="col-sm-10">
+			    <input type="text" class="form-control" name="id" id="id">
+			    </div>
+			    </div>
+			    
+			    <div class="form-group">
+			    <label for="pwd" class="col-sm-2 control-label">Password</label>
+			    <div class="col-sm-10">
+			    <input type="password" class="form-control" name="pwd" id="pwd">
+			    </div>
+			    </div>
+		        </div>
+		        <div class="modal-footer">
+		     	<button type="submit"  class="btn btn-success">로그인</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		        </div>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -1,4 +1,4 @@
-package team.board;
+package team.service;
 
 import java.util.List;
 
@@ -8,39 +8,45 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import team.board.Board;
+import team.board.BoardDAO;
+import team.board.BoardVO;
+
+
+
 @Service
 public class BoardService {
 
 	@Autowired
-	private SqlSessionTemplate sqlSessionTemplate;
+	private SqlSessionTemplate sqlST;
 
 	//게시판 첫 페이지
 	public Board boardFirstPage(int num){
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		Board b = dao.boardPage(num);
 		return b;
 	}
 	//게시판 추천수
 	public List<BoardVO> goodList(){
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		List<BoardVO> list = dao.goodList();
 		return list;
 	}
 	//페이지 번호 클릭
 	public Board boardPage(int page) {
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		Board b = dao.boardPage(page);
 		return b;
 	}
 	//제목 클릭시 상세내용 보여주기
 	public BoardVO info(int num) {
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		BoardVO board = dao.info(num);
 		return board;
 	}
 	//수정
 	public boolean update(BoardVO board) {
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		int n = dao.update(board);
 		boolean ok =false;
 		if(n>0){
@@ -50,7 +56,7 @@ public class BoardService {
 	}
 	//삭제
 	public boolean delete(int num) {
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		int n =dao.delete(num);
 		boolean ok =false;
 		if(n>0){
@@ -64,7 +70,7 @@ public class BoardService {
 	}
 	//글쓰기
 	public boolean input(BoardVO board) {
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		int n = dao.input(board);
 		boolean ok =false;
 		if(n>0){
@@ -74,7 +80,7 @@ public class BoardService {
 	}
 	//검색
 	public String search(String cat, String key, int page) {
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		System.out.println("cat: "+cat);
 		List<BoardVO> list = dao.search(cat,key, page);
 		JSONArray jar = new JSONArray();
@@ -93,14 +99,14 @@ public class BoardService {
 	}
 	//조회수
 	public void readCnt(BoardVO boardvo) {
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		int cnt = boardvo.getReadCnt();//조회수 +1
 		boardvo.setReadCnt(cnt);
 		dao.readCnt(boardvo);
 	}
 	//추천수, 추천 중복 불가
 	public boolean goodCnt(BoardVO board) {
-		BoardDAO dao = sqlSessionTemplate.getMapper(BoardDAO.class);
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
 		boolean ok = false;
 		boolean good = true;
 

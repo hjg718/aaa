@@ -4,7 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="<c:url value='/resources/jquery-2.2.4.min.js'/>"></script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="<c:url value="/resources/jquery.bootpag.min.js" />"></script>
+<link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/assets/css/style.css'/>" rel="stylesheet" />
+<link rel="stylesheet" href="<c:url value='/resources/assets/color/default.css'/>">
+<script src="<c:url value='/resources/assets/js/bootstrap.js'/>"></script>
 <meta charset="utf-8">
 <title>수정</title>
 

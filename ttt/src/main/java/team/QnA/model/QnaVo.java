@@ -1,4 +1,4 @@
-package team.QnA;
+package team.QnA.model;
 
 import java.sql.Date;
 
@@ -14,6 +14,13 @@ public class QnaVo {
 	private int page;
 	private int totalpages;
 	
+	
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 	public int getPage() {
 		return page;
 	}
@@ -37,12 +44,6 @@ public class QnaVo {
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
 	}
 	public String getQcontents() {
 		return qcontents;

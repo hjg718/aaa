@@ -123,11 +123,16 @@ function logout() {
 <style>
 .table{
 text-align: center;
+table-layout: fixed;
 }
 th{
 text-align: center;
 }
-
+td{
+white-space:nowrap;
+overflow:hidden;
+text-overflow: ellipsis;
+}
 </style>
 </head>
 <body>

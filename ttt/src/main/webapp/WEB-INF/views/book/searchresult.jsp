@@ -9,8 +9,7 @@
 <meta charset="utf-8">
 <title>검색결과</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-<c:url var="url" value="/resources/jquery.bootpag.min.js" />
-<script src="${url }"></script>
+<script src="<c:url value="/resources/jquery.bootpag.min.js" />"></script>
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/style.css'/>" rel="stylesheet" />
@@ -19,70 +18,69 @@
 
 <script>
 $(function(){
-	<c:if test="${book.tpg!=null}">
-	$('#pageNav').bootpag({
-        total: "${book.tpg}",      
-        page:  "${book.page}",           
-        maxVisible: 5,     
-        leaps: true,
-        firstLastUse: true,
-        first: '←',
-        last: '→',
-        wrapClass: 'pagination',
-        activeClass: 'active',
-        disabledClass: 'disabled',
-        nextClass: 'next',
-        prevClass: 'prev',
-        lastClass: 'last',
-        firstClass: 'first'
-    }).on("page", function(event, num){
-    	var param ={};
-    	param.page = num;
-    	param.${_csrf.parameterName } = '${_csrf.token }';
-    	param.category = '${category}';
-    	param.keyword = '${keyword}';
-    	$.ajax({
-    		url : "searchPage",
-    		method : "post",
-    		data : param,
-    		dataType : "json",
-    		success : function(res){
-    			$("#result").empty();
-    			for(var i=0;i<res.length;i++){
-    				var table = $("<table class='table table-striped table-hover'></table>");
-    				var tbody = $("<tbody></tbody>");
-    				var tr =$("<tr></tr>");
-    				var td =$("<td rowspan='3'><a href='read?bnum="+res[i].bnum+"' class='thumbnail'><img"
-    						+"  src='<c:url value='/book/img?coverName="+res[i].coverName+"'/>'/>"
-    						+"</a></td>");
-    				tr.append(td);
-    				td = $("<td class='cell bname' ><a href='read?bnum="+res[i].bnum+"'>"+res[i].bname+"</a></td>");
-    				tr.append(td);
-    				tbody.append(tr);
-    				
-    				tr =$("<tr></tr>");
-    				td = $("<td class='cell author'><a href=\"javascript:clickSearch('author','"+res[i].author+"');\">"+res[i].author+"</a></td>");
-    				tr.append(td);
-    				tbody.append(tr);
-    				
-    				tr = $("<tr></tr>");
-    				td = $("<td class='cell publisher'><a href=\"javascript:clickSearch('publisher',"
-    						+"'"+res[i].publisher+"');\">"+res[i].publisher+"</a></td>");
-    				tr.append(td);
-    				tbody.append(tr);
-    				table.append(tbody);
-    				$("#result").append(table);
-    			}
-    			$(".${category}").addClass("success");
-    		},
-    		error : function(x,s,e){
-    			alert("오류!");
-    		}
-    	});
-    });
-   	$(".${category}").addClass("success");
-  
-   	</c:if>
+	if(${book.tpg!=null}){
+		$('#pageNav').bootpag({
+	        total: "${book.tpg}",      
+	        page:  "${book.page}",           
+	        maxVisible: 5,     
+	        leaps: true,
+	        firstLastUse: true,
+	        first: '←',
+	        last: '→',
+	        wrapClass: 'pagination',
+	        activeClass: 'active',
+	        disabledClass: 'disabled',
+	        nextClass: 'next',
+	        prevClass: 'prev',
+	        lastClass: 'last',
+	        firstClass: 'first'
+	    }).on("page", function(event, num){
+	    	var param ={};
+	    	param.page = num;
+	    	param.${_csrf.parameterName } = '${_csrf.token }';
+	    	param.category = '${category}';
+	    	param.keyword = '${keyword}';
+	    	$.ajax({
+	    		url : "searchPage",
+	    		method : "post",
+	    		data : param,
+	    		dataType : "json",
+	    		success : function(res){
+	    			$("#result").empty();
+	    			for(var i=0;i<res.length;i++){
+	    				var table = $("<table class='table table-striped table-hover'></table>");
+	    				var tbody = $("<tbody></tbody>");
+	    				var tr =$("<tr></tr>");
+	    				var td =$("<td rowspan='3'><a href='read?bnum="+res[i].bnum+"' class='thumbnail'><img"
+	    						+"  src='<c:url value='/book/img?coverName="+res[i].coverName+"'/>'/>"
+	    						+"</a></td>");
+	    				tr.append(td);
+	    				td = $("<td class='cell bname' ><a href='read?bnum="+res[i].bnum+"'>"+res[i].bname+"</a></td>");
+	    				tr.append(td);
+	    				tbody.append(tr);
+	    				
+	    				tr =$("<tr></tr>");
+	    				td = $("<td class='cell author'><a href=\"javascript:clickSearch('author','"+res[i].author+"');\">"+res[i].author+"</a></td>");
+	    				tr.append(td);
+	    				tbody.append(tr);
+	    				
+	    				tr = $("<tr></tr>");
+	    				td = $("<td class='cell publisher'><a href=\"javascript:clickSearch('publisher',"
+	    						+"'"+res[i].publisher+"');\">"+res[i].publisher+"</a></td>");
+	    				tr.append(td);
+	    				tbody.append(tr);
+	    				table.append(tbody);
+	    				$("#result").append(table);
+	    			}
+	    			$(".${category}").addClass("success");
+	    		},
+	    		error : function(x,s,e){
+	    			alert("오류!");
+	    		}
+	    	});
+	    });
+	   	$(".${category}").addClass("success");
+	}
     });
 function logout() {
 	$("#logout").submit();
