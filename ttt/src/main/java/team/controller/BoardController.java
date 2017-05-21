@@ -16,13 +16,14 @@ import team.service.BoardService;
 
 
 @Controller
+@RequestMapping("board/")
 public class BoardController {
 
 	@Autowired
 	private BoardService svc;
 	
 	//게시판 첫 화면 
-	@RequestMapping(value="boardListStart")
+	@RequestMapping(value="list")
 	public String boardListStart(Model model){
 		Board b = svc.boardFirstPage(1);
 		List<BoardVO> list = b.getList();
@@ -49,14 +50,16 @@ public class BoardController {
 		return "board/boardInput";
 	}
 	//게시판 글 쓰기2
-	@RequestMapping(value="boardInput")
-	@ResponseBody
+	@RequestMapping(value="input")
 	public String input(Model model, BoardVO board){
 		boolean ok = svc.input(board);
-		JSONObject job = new JSONObject();
-		job.put("ok", ok);
-		return job.toJSONString();
+		if(ok){
+			BoardVO vo = svc.info(board.getNum());
+			model.addAttribute("board", vo);
+		}
+		return "board/boardRecent";
 	}
+	
 	//댓글
 	@RequestMapping("boardRepl")
 	@ResponseBody

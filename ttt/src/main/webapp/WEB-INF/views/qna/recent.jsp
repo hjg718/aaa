@@ -127,7 +127,7 @@ class="navbar-form navbar-right" id="searchForm">
 <ul class="list-inline" style="text-align: center;">
 <li><a class="link" href="<c:url value="/qna/list"/>">&bull; 메인</a></li>
 <li></li>
-<li><a class="link" href="javascript:modify();">글 수정</a></li>
+<li><a class="link" href="javascript:modify();">&bull; 글 수정</a></li>
 </ul>
 </div>
 </div>

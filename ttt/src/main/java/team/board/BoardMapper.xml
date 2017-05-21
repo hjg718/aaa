@@ -88,6 +88,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="input" parameterType="team.board.BoardVO">
 		insert into fboard (num, title, contents,author,regdate,ref) 
 		values (BOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{author} ,sysdate,#{ref} )
+		<selectKey order="AFTER" resultType="int" keyProperty="num">
+			SELECT BOARD_SEQ.CURRVAL FROM DUAL
+		</selectKey>
 	</insert> 
 	<!-- 검색 -->
 	<select id="search" resultType="team.board.BoardVO">
