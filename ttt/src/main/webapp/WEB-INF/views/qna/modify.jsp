@@ -104,7 +104,8 @@ id="bs-example-navbar-collapse-1">
 <li><a href="javascript:logout();">로그아웃</a></li>
 <li><a href="${user}">내정보보기</a></li>
 </sec:authorize>
-<li><a>자유게시판</a></li>
+<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 </ul>
 					
 <form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"
@@ -234,7 +235,7 @@ class="navbar-form navbar-right" id="searchForm">
 		</div>
 	</div>
 	
-<!--입력폼 모달  -->
+<!--상태 모달  -->
 <div class="modal fade" id="modifyModal" tabindex="-1"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

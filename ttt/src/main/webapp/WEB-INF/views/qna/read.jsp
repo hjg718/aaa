@@ -72,7 +72,7 @@ function del() {
 				$("#readModalBody").text("삭제되었습니다.");
 				$('#readModal').modal('show');
 				$('#readModal').on('hidden.bs.modal', function (e) {
-			 		location.reload();
+			 		location.href="list";
 			 	});
 			}
 			else if(r.pass==false ){
@@ -177,7 +177,8 @@ id="bs-example-navbar-collapse-1">
 <li><a href="javascript:logout();">로그아웃</a></li>
 <li><a href="${user}">내정보보기</a></li>
 </sec:authorize>
-<li><a>자유게시판</a></li>
+<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 </ul>
 					
 <form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"
@@ -220,7 +221,7 @@ class="navbar-form navbar-right" id="searchForm">
   </dd>
 </dl>
 <ul class="list-inline" style="text-align: center;">
-<li><a class="link" href="<c:url value="/qna/list"/>">&bull; 메인</a></li>
+<li><a class="link" href="<c:url value="/qna/list"/>">&bull; 목록보기</a></li>
 <li></li>
 <li><a class="link" href="javascript:showModify();">&bull; 글 수정</a></li>
 <li></li>
@@ -346,7 +347,7 @@ class="navbar-form navbar-right" id="searchForm">
 		</div>
 	</div>
 	
-<!--입력폼 모달  -->
+<!--상태 모달  -->
 <div class="modal fade" id="readModal" tabindex="-1"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -383,7 +384,7 @@ class="navbar-form navbar-right" id="searchForm">
 <br>
 </div>
 <div class="modal-footer">
-<button type="button"  class="btn btn-success" onclick="delete();">확인</button>
+<button type="button"  class="btn btn-success" onclick="modify();">확인</button>
 <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 </div>
 </div>

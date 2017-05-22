@@ -1,4 +1,4 @@
-package team.board;
+package team.board.model;
 
 import java.sql.Date;
 

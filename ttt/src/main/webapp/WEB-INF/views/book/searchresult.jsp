@@ -155,8 +155,8 @@ border-bottom: 1px solid #ddd;
 									<li><a href="javascript:logout();">로그아웃</a></li>
 									<li><a href="${user}">내정보보기</a></li>
 								</sec:authorize>
-								 <li><a>Q&amp;A게시판</a></li>
-								 <li><a>자유게시판</a></li>
+								<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+								<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 							</ul>
 					
 							<form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"

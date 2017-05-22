@@ -79,7 +79,8 @@ id="bs-example-navbar-collapse-1">
 <li><a href="javascript:logout();">로그아웃</a></li>
 <li><a href="${user}">내정보보기</a></li>
 </sec:authorize>
-<li><a>자유게시판</a></li>
+<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 </ul>
 					
 <form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"
@@ -120,6 +121,8 @@ class="navbar-form navbar-right" id="searchForm">
   <dd><p>${board.title}</p></dd>
   <dt>조회수 :</dt>
   <dd><p>${board.readCnt}</p></dd>
+    <dt>추천수 :</dt>
+  <dd><p>${board.goodcnt}</p></dd>
   <dt>작성자 :</dt>
   <dd><p>${board.author}</p></dd>
      <dt>작성일 :</dt>
@@ -130,7 +133,7 @@ class="navbar-form navbar-right" id="searchForm">
   </dd>
 </dl>
 <ul class="list-inline" style="text-align: center;">
-<li><a class="link" href="<c:url value="/board/list"/>">&bull; 메인</a></li>
+<li><a class="link" href="<c:url value="/board/list"/>">&bull; 목록보기</a></li>
 <li></li>
 <li><a class="link" href="javascript:edit();">&bull; 글 수정</a></li>
 </ul>
@@ -205,23 +208,6 @@ class="navbar-form navbar-right" id="searchForm">
 			</div>
 		</div>
 	</div>
-	
-<!--입력폼 모달  -->
-<div class="modal fade" id="inputModal" tabindex="-1"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body" id="inputModalBody">
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					확인
-				</button>
-				</div>
-			</div>
-		</div>
-	</div>	
-	
+		
 </body>
 </html>

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import team.board.Board;
-import team.board.BoardVO;
+import team.board.model.Board;
+import team.board.model.BoardVO;
 import team.service.BoardService;
 
 
@@ -123,7 +123,11 @@ public class BoardController {
 			job.put("ok",ok);
 		return job.toJSONString();
 	}
-	//-----------------------------------------
 	
-	
+	@RequestMapping("recent")
+	public String recent(@RequestParam("id")String id, Model model){
+		BoardVO vo = svc.recent(id);
+		model.addAttribute("board",vo);
+		return "board/boardRecent";
+	}
 }

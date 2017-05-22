@@ -1,4 +1,4 @@
-package team.board;
+package team.board.model;
 
 import java.util.*;
 
@@ -21,6 +21,7 @@ public interface BoardDAO {
 	
 	public List<BoardVO> search(
 	@Param("category") String cat,@Param("keyword") String key, @Param("page") int page ); //°Ë»ö
+	public BoardVO recent(String id);
 	
 	
 

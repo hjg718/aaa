@@ -24,7 +24,7 @@ font-size: 14pt;
 dd pre{
 font-size: 13pt;
 }
-repleBox{
+#repleBox{
 display: none;
 }
 </style>
@@ -39,22 +39,46 @@ function deleteNum(){
 		data:param,
 		dataType:'json',
 		success:function(res){
-			if(confirm("삭제 하시겠습니까 ?")){
 			if(res.ok){
-				alert("삭제 되었습니다.");//false
-				location.href = "boardListStart";
+				$("#infoModalBody").text("삭제되었습니다. ");
+				$('#infoModal').modal('show');
+				$('#infoModal').on('hidden.bs.modal', function (e) {
+			 		location.href="list";
+			 	});
 			}else{
-				alert("댓글이 달린글은 삭제가 불가능 합니다."); //true
-			}
+				$("#infoModalBody").text("댓글이 있는 글은 삭제 할 수 없습니다. ");
+				$('#infoModal').modal('show');
 			}
 		},
-		error:function(xhr,status,err){alert("오류");}
+		error:function(xhr,status,err){
+			alert("오류");
+			}
 	});
 	
 }
 //댓글
 
 function saveRepl(){
+	
+	var t = $('#title').val();
+	var c = $('#contents').val();
+	
+	
+	$('#titleDiv').removeClass("has-error");
+	$('#contentsDiv').removeClass("has-error");
+	
+	if(t==""||t==null){
+		$("#infoModalBody").text("제목을 입력하세요. ");
+		$('#infoModal').modal('show');
+		$('#titleDiv').addClass("has-error");
+			return false;
+	}else if(c==""||c==null){
+		$("#infoModalBody").text("내용을 입력하세요 .");
+		$('#infoModal').modal('show');
+		$('#contentsDiv').addClass("has-error");
+		return false;
+	}
+	
 	   var param = $('#refForm').serialize();
 	   
 	   $.ajax({
@@ -63,14 +87,15 @@ function saveRepl(){
 	      data : param,
 	      dataType : "json",
 	      success : function(res){
-	    	  if(confirm("댓글을 저장 하시겠습니까?")){
 	         	if(res){
-	            	alert("작성하신 댓글을 정상적으로 저장했습니다.게시판으로 이동합니다.");
-	            	location.href="list";         
+	         		$("#infoModalBody").text("작성하신 댓글을 정상적으로 저장했습니다.");
+	        		$('#infoModal').modal('show');
+	        		$('#infoModal').on('hidden.bs.modal', function (e) {
+				 		location.href="recent?id=<sec:authentication property='name' />";
+				 	});        
 	         	}else{
 	        		 alert("저장 실패");
 	         	}
-	    	  }
 	      },
 	      error : function(xhr, status, err){alert("오류");}
 	   });
@@ -87,11 +112,15 @@ function goodClick(){
 		dataType:'json',
 		success:function(res){
 			if(res.ok){
-				alert("추천 했습니다.");
+				$("#infoModalBody").text("추천성공! ");
+				$('#infoModal').modal('show');
 			}else{
-				alert("중복 추천은 불가능 합니다.");
+				$("#infoModalBody").text("이미 추천 하신 글입니다. ");
+				$('#infoModal').modal('show');
 			}
-		},error:function(xhr,status,err){alert("추천 오류");}
+		},error:function(xhr,status,err){
+			alert("추천 오류");
+		}
 	});
 	return false;
 }
@@ -151,7 +180,8 @@ id="bs-example-navbar-collapse-1">
 <li><a href="javascript:logout();">로그아웃</a></li>
 <li><a href="${user}">내정보보기</a></li>
 </sec:authorize>
-<li><a>자유게시판</a></li>
+<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 </ul>
 					
 <form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"
@@ -192,6 +222,8 @@ class="navbar-form navbar-right" id="searchForm">
   <dd><p>${list.title}</p></dd>
   <dt>조회수 :</dt>
   <dd><p>${list.readCnt}</p></dd>
+  <dt>추천수 :</dt>
+  <dd><p>${list.goodcnt}</p></dd>
   <dt>작성자 :</dt>
   <dd><p>${list.author}</p></dd>
      <dt>작성일 :</dt>
@@ -202,7 +234,7 @@ class="navbar-form navbar-right" id="searchForm">
   </dd>
 </dl>
 <ul class="list-inline" style="text-align: center;">
-<li><a class="link" href="<c:url value="/board/list"/>">&bull; 메인</a></li>
+<li><a class="link" href="<c:url value="/board/list"/>">&bull; 목록보기</a></li>
 <sec:authorize access="isAuthenticated()">
 <li></li>
 <li><a class="link" href="javascript:goodClick();">&bull; 글 추천</a></li>
@@ -214,7 +246,7 @@ class="navbar-form navbar-right" id="searchForm">
 <li></li>
 <li><a class="link" href="javascript:edit();">&bull; 글 수정</a></li>
 <li></li>
-<li><a class="link" href="javascript:deleteNum();">&bull; 글 수정</a></li>
+<li><a class="link" href="javascript:deleteNum();">&bull; 글 삭제</a></li>
 </c:when>
 <c:otherwise>
 <sec:authorize access="hasAnyAuthority('MANAGER,ADMIN')">
@@ -234,17 +266,42 @@ class="navbar-form navbar-right" id="searchForm">
 <h4 class="panel-title">답글 달기</h4>
 </div>
 <div class="panel-body">
-<form id="refForm" onsubmit="return saveRepl();"> <!-- 댓글 -->
+<form id="refForm" class="form-horizontal"> <!-- 댓글 -->
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 	<input type="hidden" name="ref" value="${list.num}">
-   	답글 제목 :<textarea type="text"id="title" name="title" >Re:</textarea><br>
-   	답글 내용 :<textarea type="text"id="contents" name="contents" >Re:</textarea><br>
-   	작성자 :${loginId}<input type="hidden" name="author" value="${loginId}"><br>
- 	<button type="button" onclick="saveRepl();">답글쓰기</button>
+	
+<div class="form-group" id="titleDiv">
+<label for="name" class="col-sm-2 control-label">제목 </label>
+<div class="col-sm-10">
+<input type="text" name="title" id="title" class="form-control" value="RE:">
+</div>
+</div>
+
+<div class="form-group" id="contentsDiv">
+<label for="name" class="col-sm-2 control-label">내용 </label>
+<div class="col-sm-10">
+<textarea class="form-control" id="contents" rows="5" style="resize: none;" name="contents" placeholder="내용을 입력해주세요"></textarea>
+</div>
+</div>
+
+<div class="form-group" >
+<label for="name" class="col-sm-2 control-label">작성자 </label>
+<div class="col-sm-10">
+<input type="text" disabled class="form-control" value="${id }">
+<input type="hidden" name="author" value="${id }">
+</div>
+</div>
+
+<div id="bset">
+ <button type="button" onclick="saveRepl();" class="btn btn-theme">작성 완료 </button>
+ <button type="reset" class="btn btn-theme">다시 작성</button>
+</div>
+
 </form>
 </div>
 </div>
 </div>
+
 </div>
 </div>
 </div>
@@ -268,7 +325,7 @@ class="navbar-form navbar-right" id="searchForm">
 <!--수정 폼  -->
 <form action="<c:url value="/board/edit"/>" method="post" id="edit">
 <input type="hidden" name="${_csrf.parameterName }"	value="${_csrf.token }">
-<input type="hidden" name="num" value="${board.num }">
+<input type="hidden" name="num" value="${list.num }">
 </form>
 
 <!--로그아웃  -->
@@ -330,12 +387,12 @@ class="navbar-form navbar-right" id="searchForm">
 		</div>
 	</div>
 	
-<!--입력폼 모달  -->
-<div class="modal fade" id="inputModal" tabindex="-1"
+<!--상태 모달  -->
+<div class="modal fade" id="infoModal" tabindex="-1"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-body" id="inputModalBody">
+				<div class="modal-body" id="infoModalBody">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="close" data-dismiss="modal"
@@ -346,6 +403,5 @@ class="navbar-form navbar-right" id="searchForm">
 			</div>
 		</div>
 	</div>	
-	
 </body>
 </html>

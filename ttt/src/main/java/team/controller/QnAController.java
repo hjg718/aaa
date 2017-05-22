@@ -90,8 +90,8 @@ public class QnAController {
 	public String setUpdateModify(QnaVo vo,Model model){
 		boolean ok = svc.modify(vo);
 		if(ok==true){
-			model.addAttribute("recent", svc.read(vo.getNum()));
-			return "qna/recent";
+			model.addAttribute("read", svc.read(vo.getNum()));
+			return "qna/read";
 		}
 		model.addAttribute("read", svc.read(vo.getNum()));
 		model.addAttribute("error", true);

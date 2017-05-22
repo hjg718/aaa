@@ -8,9 +8,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import team.board.Board;
-import team.board.BoardDAO;
-import team.board.BoardVO;
+import team.board.model.Board;
+import team.board.model.BoardDAO;
+import team.board.model.BoardVO;
 
 
 
@@ -139,6 +139,11 @@ public class BoardService {
 			return ok=false;
 		}
 		return false;
+	}
+	public BoardVO recent(String id) {
+		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
+		BoardVO vo = dao.recent(id);
+		return vo;
 	}
 
 
