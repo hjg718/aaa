@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>자유게시판 작성하기</title>
+<title>작성 완료</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="<c:url value="/resources/jquery.bootpag.min.js" />"></script>
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
@@ -17,29 +17,15 @@
 <link rel="stylesheet" href="<c:url value='/resources/assets/color/default.css'/>">
 <script src="<c:url value='/resources/assets/js/bootstrap.js'/>"></script>
 <style>
+#result{
+font-size: 14pt;
+}
+
+dd pre{
+font-size: 13pt;
+}
 </style>
 <script type="text/javascript">
-function boardInput(){
-	
-	var t = $('#title').val();
-	var c = $('#contents').val();
-	
-	$('#titleDiv').removeClass("has-error");
-	$('#contentsDiv').removeClass("has-error");
-	
-	if(t==""||t==null){
-		$("#inputModalBody").text("제목을 입력하세요. ");
-		$('#inputModal').modal('show');
-		$('#titleDiv').addClass("has-error");
-			return false;
-	}else if(c==""||c==null){
-		$("#inputModalBody").text("내용을 입력하세요 .");
-		$('#inputModal').modal('show');
-		$('#contentsDiv').addClass("has-error");
-		return false;
-	}
-	return true;
-}
 function logout() {
 	$("#logout").submit();
 }
@@ -50,6 +36,9 @@ function check() {
 		$('#input').modal('show');
 	}
 	return pass;
+}
+function edit() {
+	$("#edit").submit();
 }
 </script>
 <body>
@@ -110,52 +99,54 @@ class="navbar-form navbar-right" id="searchForm">
 </div>
 </div>
 </header>
-<section id="join" class="section gray">
+<section id="recentcon" class="section gray">
 <div class="container">
-<div class="row">
-<div class="col-md-8 col-md-offset-2">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
 <div class="heading">
-<h3>자유게시판 작성하기</h3>
+<h4>작성하신 글을 확인해 주세요.</h4>
 </div>
-<P></P>
-<div id="inputCon">
-<form id="inputForm" class="form-horizontal" action="input" method="post" onsubmit="return boardInput();" >
-<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-<input type="hidden" name="ref" value="0">
- 
-<div class="form-group" id="titleDiv">
-<label for="name" class="col-sm-2 control-label">제목 </label>
-<div class="col-sm-10">
-<input type="text" name="title" id="title" class="form-control" placeholder="제목을 입력해주세요">
+<div id="result">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h4 class="panel-title">작성내용 내용</h4>
 </div>
-</div>
+<div class="panel-body">
+<dl class="dl-horizontal">
 
-<div class="form-group" id="contentsDiv">
-<label for="name" class="col-sm-2 control-label">내용 </label>
-<div class="col-sm-10">
-<textarea class="form-control" rows="15" style="resize: none;" name="contents" id="contents" placeholder="문의 하실 내용을 입력해주세요"></textarea>
+<dt>글 번호 :</dt>
+  <dd><p>${board.num}</p></dd>
+<dt>제목 :</dt>
+  <dd><p>${board.title}</p></dd>
+  <dt>조회수 :</dt>
+  <dd><p>${board.readCnt}</p></dd>
+  <dt>작성자 :</dt>
+  <dd><p>${board.author}</p></dd>
+     <dt>작성일 :</dt>
+  <dd><p>${board.regdate}</p></dd>
+  <dt>내용 :</dt>
+  <dd>
+  <pre>${board.contents}</pre>
+  </dd>
+</dl>
+<ul class="list-inline" style="text-align: center;">
+<li><a class="link" href="<c:url value="/board/list"/>">&bull; 메인</a></li>
+<li></li>
+<li><a class="link" href="javascript:edit();">&bull; 글 수정</a></li>
+</ul>
 </div>
 </div>
-
-<div class="form-group" >
-<label for="name" class="col-sm-2 control-label">작성자 </label>
-<div class="col-sm-10">
-<input type="text" disabled class="form-control" value="${id }">
-<input type="hidden" name="author" value="${id }">
-</div>
-</div>
-
-<div id="bset">
- <button type="submit" class="btn btn-theme">작성 완료 </button>
- <button type="reset" class="btn btn-theme">다시 작성</button>
- <a href="list" class="btn btn-theme">목록 보기</a>
-</div>
-</form>
 </div>
 </div>
 </div>
 </div>
 </section>
+<!--수정 폼  -->
+<form action="<c:url value="/board/edit"/>" method="post" id="edit">
+<input type="hidden" name="${_csrf.parameterName }"	value="${_csrf.token }">
+<input type="hidden" name="num" value="${board.num }">
+</form>
+
 <!--로그아웃  -->
 <form action="<c:url value="/logout"/>" method="post" id="logout">
 <input type="hidden" name="${_csrf.parameterName }"	value="${_csrf.token }">

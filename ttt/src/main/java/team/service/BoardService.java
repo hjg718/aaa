@@ -128,7 +128,6 @@ public class BoardService {
 			}
 		}
 		if(good){
-			System.out.println("if(good) : "+good);
 			int n = dao.goodCnt(board); //추천수 +1 하기
 			if(n>0){
 				ok = true;

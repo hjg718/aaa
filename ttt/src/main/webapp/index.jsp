@@ -104,7 +104,7 @@ margin-top: 23%;
 <li><a href="<c:url value="/user/join"/>">회원가입</a></li>
 </sec:authorize>
 <li><a href="qna/list">Q&amp;A게시판</a></li>
-<li><a href="boardListStart">자유게시판</a></li>
+<li><a href="board/list">자유게시판</a></li>
 </ul>
 </nav>
 </div>
