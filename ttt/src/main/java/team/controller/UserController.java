@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sun.glass.ui.delegate.MenuBarDelegate;
 
 import team.service.UserService;
+import team.user.model.User;
 import team.user.model.UserVo;
 
 @Controller
@@ -56,8 +57,8 @@ public class UserController {
 	
 	@RequestMapping("info")
 	public String info(@RequestParam("id") String id,Model model){
-		UserVo vo = svc.getvo(id);
-		model.addAttribute("userVo", vo);
+		User info = svc.getinfo(id);
+		model.addAttribute("info", info);
 		return "user/info";
 	}
 	
@@ -72,9 +73,12 @@ public class UserController {
 	public String edit(UserVo vo,@RequestParam("newpwd")String newpwd,Model model){
 		boolean pass= svc.edit(vo,newpwd);
 		if(pass){
-			model.addAttribute("vo", svc.getvo(vo.getUserid()));
+			model.addAttribute("info", svc.getinfo(vo.getUserid()));
 			return "user/info";
 		}
+		UserVo userVo = svc.getvo(vo.getUserid());
+		model.addAttribute("userVo", userVo);
+		model.addAttribute("error", true);
 		return "user/edit";
 	}
 	

@@ -393,7 +393,7 @@
 /* line 232, ../src/slippry.scss */
 .sy-caption-wrap {
   position: absolute;
-  top: 35%;
+  top: 30%;
   z-index: 12;
   left: 50%;
 }
@@ -401,7 +401,7 @@
 .sy-caption-wrap .sy-caption {
   position: relative;
   left: -50%;
-	font-size: 30px;
+	font-size: 35px;
   color: #fff;
 
 }

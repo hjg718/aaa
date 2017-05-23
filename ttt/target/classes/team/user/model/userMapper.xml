@@ -8,11 +8,8 @@
 	</select>
 	<insert id="join" parameterType="team.user.model.UserVo">
 		INSERT INTO puser VALUES(SEQ_PUSER.NEXTVAL,#{uname},#{userid},#{upwd},#{phone},
-		#{uemail},#{authority},'1',#{gender}) 
+		#{uemail},#{authority},'1',#{gender},5,0) 
 	</insert>
-	<select id="getvo" resultType="team.user.model.UserVo">
-		SELECT userid,uname,phone,gender,uemail,upwd FROM puser WHERE userid = #{id}
-	</select>
 	
 	<update id="edit" parameterType="HashMap">
 		UPDATE puser 
@@ -26,8 +23,47 @@
 		WHERE userid = #{vo.userid}
 	</update>
 	
-	<delete id="secession">
-	DELETE FROM puser WHERE userid = #{userid}
+	<update id="secession">
+		UPDATE puser SET enabled = 0 WHERE userid = #{userid}
+	</update>
+	
+	<select id="getvo" resultType="team.user.model.UserVo">
+		SELECT userid,uname,phone,gender,uemail,upwd FROM puser WHERE userid = #{id}
+	</select>
+
+	<select id="rental" resultMap="rental">
+		SELECT r.num, r.booknum,r.rentaldate,b.bname FROM rental r
+		INNER JOIN book b ON r.booknum = b.bnum
+		WHERE r.rentaluser = #{userid} AND r.return = 1
+	</select>
+	
+	<resultMap type="team.user.model.RentalVo" id="rental">
+		<result property="num" column="num" />
+		<result property="booknum" column="booknum" />
+		<result property="bookname" column="bname" />
+		<result property="rentaldate" column="rentaldate" />
+		
+	</resultMap>
+	
+	<select id="booking" resultMap="booking">
+		SELECT b.bname, b.bnum,k.num FROM book b 
+		INNER JOIN booking k ON  k.booknum = b.bnum 
+		WHERE k.bookinguser = #{id}
+		
+	</select>
+	
+	<resultMap type="team.user.model.BookingVo" id="booking">
+		<result property="booknum" column="bnum" />
+		<result property="bookname" column="bname" />
+		<result property="num" column="num" />
+	</resultMap>
+	
+	<select id="rentalCheck" resultType="java.util.Date">
+		SELECT rentaldate FROM rental WHERE booknum = #{booknum} AND return = 1
+	</select>
+
+	<delete id="removeBooking">
+		DELETE FROM booking WHERE bookinguser = #{userid}
 	</delete>
 	
 </mapper>

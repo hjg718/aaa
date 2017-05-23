@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class UserVo {
 	
-	@Size(min=1,max=10, message="1~10자로 입력해주세요")
+	@Size(min=3,max=16, message="1~10자로 입력해주세요")
 	private String userid;
 	@NotEmpty(message="필수입력 항목입니다")
 	private String upwd;
@@ -15,7 +15,8 @@ public class UserVo {
 	private String uemail;
 	private String gender;
 	private String authority;
-	
+	private int maxBook;
+	private int currBook;
 	
 
 
@@ -61,6 +62,18 @@ public class UserVo {
 	}
 	public void setUemail(String uemail) {
 		this.uemail = uemail;
+	}
+	public int getMaxBook() {
+		return maxBook;
+	}
+	public void setMaxBook(int maxBook) {
+		this.maxBook = maxBook;
+	}
+	public int getCurrBook() {
+		return currBook;
+	}
+	public void setCurrBook(int currBook) {
+		this.currBook = currBook;
 	}
 	
 	
