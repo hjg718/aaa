@@ -41,7 +41,7 @@ function check() {
 						<span class="icon-bar"></span> 
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+					<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
 				</div>
 				<div>
 					<div class="collapse navbar-collapse"

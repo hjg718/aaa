@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>회원 정보보기</title>
+<title>내 서재 보기</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
@@ -147,7 +147,7 @@ text-overflow: ellipsis;
 						<span class="icon-bar"></span> 
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+					<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
 				</div>
 				<div>
 					<div class="collapse navbar-collapse"
@@ -194,7 +194,7 @@ text-overflow: ellipsis;
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 <div class="heading">
-<h3>내 정보 보기</h3>
+<h3>서재 보기</h3>
 </div>
 <P></P>		
 <div id="result">

@@ -209,7 +209,7 @@ data-target="#bs-example-navbar-collapse-1">
 <span class="icon-bar"></span> 
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
 </div>
 <div>
 <div class="collapse navbar-collapse"
@@ -234,7 +234,7 @@ id="bs-example-navbar-collapse-1">
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
 <li><a href="javascript:logout();">로그아웃</a></li>
-<li><a href="${user}">내정보보기</a></li>
+<li><a href="${user}">내 서재 가기</a></li>
 </sec:authorize>
 <li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
 <li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
@@ -277,7 +277,7 @@ class="navbar-form navbar-right" id="searchForm">
 <c:forEach var="b" items="${goodlist}">
  <tr>
 <td>${b.num}</td>
-<td id="title"><a href="<c:url value="/board/info?num=${b.num}readCnt=${b.readCnt}"/>">${b.title}</a></td>
+<td id="title"><a href="<c:url value="/board/info?num=${b.num}&readCnt=${b.readCnt}"/>">${b.title}</a></td>
 <td>${b.author}</td>
 <td>${b.readCnt}</td>
 <td>${b.goodcnt}</td>

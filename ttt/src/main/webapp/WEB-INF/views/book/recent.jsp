@@ -48,63 +48,59 @@ white-space: pre-line;
 </style>
 </head>
 <body>
-	<header>
-		<div id="navigation"class="navbar navbar-inverse navbar-fixed-top default"role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target="#bs-example-navbar-collapse-1">
-						<span class="icon-bar"></span> 
-						<span class="icon-bar"></span> 
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
-				</div>
-				<div>
-					<div class="collapse navbar-collapse"
-						id="bs-example-navbar-collapse-1">
-						<nav>
+<header>
+<div id="navigation"class="navbar navbar-inverse navbar-fixed-top default"role="navigation">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+<span class="icon-bar"></span> 
+<span class="icon-bar"></span> 
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
+</div>
+<div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<nav>
 						
-						<ul class="nav navbar-nav navbar-left">
-						<sec:authorize access="hasAuthority('ADMIN')">
-									<li><a href="<c:url value="/user/join"/>">매니저계정만들기</a></li>
-								</sec:authorize>
-								<sec:authorize access="hasAnyAuthority('MANAGER','ADMIN')">
-									<li><a href="<c:url value="/book/add"/>">도서등록</a></li>
-								</sec:authorize>
-					</ul>
-						<ul class="nav navbar-nav navbar-right" id="mynav">
-								<sec:authentication var="id" property="name" />
-								<c:url var="user" value="/user/info">
-									<c:param name="id" value="${id }" />
-								</c:url>
-								<sec:authorize access="isAuthenticated()">
-									<li><a href="javascript:logout();">로그아웃</a></li>
-									<li><a href="${user}">내정보보기</a></li>
-								</sec:authorize>
-								<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
-								<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
-							</ul>
+<ul class="nav navbar-nav navbar-left">
+<sec:authorize access="hasAuthority('ADMIN')">
+<li><a href="<c:url value="/user/join"/>">매니저계정만들기</a></li>
+</sec:authorize>
+<sec:authorize access="hasAnyAuthority('MANAGER','ADMIN')">
+<li><a href="<c:url value="/book/add"/>">도서등록</a></li>
+</sec:authorize>
+</ul>
+<ul class="nav navbar-nav navbar-right" id="mynav">
+<sec:authentication var="id" property="name" />
+<c:url var="user" value="/user/info">
+<c:param name="id" value="${id }" />
+</c:url>
+<sec:authorize access="isAuthenticated()">
+<li><a href="javascript:logout();">로그아웃</a></li>
+<li><a href="${user}">내 서재 가기</a></li>
+</sec:authorize>
+<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
+</ul>
 					
-							<form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"
-							class="navbar-form navbar-right" id="searchForm">
-								<input type="hidden" name="${_csrf.parameterName }"
-									value="${_csrf.token }"> 
-									<select name="category" class="form-control input-lg">
-									<option value="bname">제목</option>
-									<option value="author">저자</option>
-									<option value="publisher">출판사</option>
-								</select> 
-								<input type="text" name="keyword" id="key" class="form-control input-lg" placeholder="도서정보를 입력해주세요">
-								<button type="submit" class="btn btn-theme" >검색</button>
-							</form>
+<form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();" class="navbar-form navbar-right" id="searchForm">
+<input type="hidden" name="${_csrf.parameterName }"	value="${_csrf.token }"> 
+<select name="category" class="form-control input-lg">
+<option value="bname">제목</option>
+<option value="author">저자</option>
+<option value="publisher">출판사</option>
+</select> 
+<input type="text" name="keyword" id="key" class="form-control input-lg" placeholder="도서정보를 입력해주세요">
+<button type="submit" class="btn btn-theme" >검색</button>
+</form>
 							
-						</nav>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</header>
 <section id="recentcon" class="section gray">
 <div class="container">
 	<div class="row">

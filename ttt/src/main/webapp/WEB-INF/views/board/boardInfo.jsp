@@ -153,7 +153,7 @@ data-target="#bs-example-navbar-collapse-1">
 <span class="icon-bar"></span> 
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
 </div>
 <div>
 <div class="collapse navbar-collapse"
@@ -178,7 +178,7 @@ id="bs-example-navbar-collapse-1">
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
 <li><a href="javascript:logout();">로그아웃</a></li>
-<li><a href="${user}">내정보보기</a></li>
+<li><a href="${user}">내 서재 가기</a></li>
 </sec:authorize>
 <li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
 <li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
@@ -205,9 +205,6 @@ class="navbar-form navbar-right" id="searchForm">
 <div class="container">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-<div class="heading">
-<h4>작성하신 글을 확인해 주세요.</h4>
-</div>
 <div id="result">
 <div class="panel panel-success">
 <div class="panel-heading">
@@ -251,9 +248,7 @@ class="navbar-form navbar-right" id="searchForm">
 <c:otherwise>
 <sec:authorize access="hasAnyAuthority('MANAGER,ADMIN')">
 <li></li>
-<li><a class="link" href="javascript:edit();">&bull; 글 수정</a></li>
-<li></li>
-<li><a class="link" href="javascript:deleteNum();">&bull; 글 수정</a></li>
+<li><a class="link" href="javascript:deleteNum();">&bull; 글 삭제</a></li>
 </sec:authorize>
 </c:otherwise>
 </c:choose>

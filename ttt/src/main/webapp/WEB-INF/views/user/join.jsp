@@ -180,7 +180,7 @@ color: red;
 						<span class="icon-bar"></span> 
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+					<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
 				</div>
 				<div>
 					<div class="collapse navbar-collapse"
@@ -198,7 +198,7 @@ color: red;
 						<c:param name="id" value="${id }" />
 						</c:url>
 						<li><a href="javascript:logout();">로그아웃</a></li>
-						<li><a href="${user}">내정보보기</a></li>
+						<li><a href="${user}">내 서재 가기</a></li>
 						</sec:authorize>
 						<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
 						<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>

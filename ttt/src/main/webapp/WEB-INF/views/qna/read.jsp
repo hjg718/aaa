@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>작성 완료</title>
+<title>글 읽기</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="<c:url value="/resources/jquery.bootpag.min.js" />"></script>
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
@@ -27,6 +27,10 @@ font-size: 13pt;
 #answer{
 display: none;
 }
+pre{
+white-space: pre-line;
+}
+
 </style>
 <script type="text/javascript">
 $(function() {
@@ -150,7 +154,7 @@ data-target="#bs-example-navbar-collapse-1">
 <span class="icon-bar"></span> 
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
 </div>
 <div>
 <div class="collapse navbar-collapse"
@@ -175,7 +179,7 @@ id="bs-example-navbar-collapse-1">
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
 <li><a href="javascript:logout();">로그아웃</a></li>
-<li><a href="${user}">내정보보기</a></li>
+<li><a href="${user}">내 서재 가기</a></li>
 </sec:authorize>
 <li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
 <li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
