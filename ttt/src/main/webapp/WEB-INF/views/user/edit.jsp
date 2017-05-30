@@ -119,7 +119,6 @@ display: none;
 </style>
 </head>
 <body>
-<sec:authentication var="id" property="name"/>
 	<header>
 		<div id="navigation"class="navbar navbar-inverse navbar-fixed-top default"role="navigation">
 			<div class="container">
@@ -130,7 +129,7 @@ display: none;
 						<span class="icon-bar"></span> 
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+					<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
 				</div>
 				<div>
 					<div class="collapse navbar-collapse"
@@ -147,11 +146,8 @@ display: none;
 					</ul>
 						<ul class="nav navbar-nav navbar-right" id="mynav">
 								<sec:authorize access="isAuthenticated()">
-								<c:url var="user" value="/user/info">
-								<c:param name="id" value="${id }" />
-								</c:url>
 								<li><a href="javascript:logout();">로그아웃</a></li>
-								<li><a href="${user}">내정보보기</a></li>
+								<li><a href="<c:url value="/user/info"/>">내 서재 가기</a></li>
 								</sec:authorize>
 							<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
 							<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>

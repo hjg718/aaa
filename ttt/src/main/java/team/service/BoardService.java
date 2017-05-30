@@ -81,7 +81,6 @@ public class BoardService {
 	//°Ë»ö
 	public String search(String cat, String key, int page) {
 		BoardDAO dao = sqlST.getMapper(BoardDAO.class);
-		System.out.println("cat: "+cat);
 		List<BoardVO> list = dao.search(cat,key, page);
 		JSONArray jar = new JSONArray();
 		for(int i = 0 ; i<list.size(); i++){

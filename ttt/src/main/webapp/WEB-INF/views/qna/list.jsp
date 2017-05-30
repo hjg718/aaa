@@ -193,7 +193,7 @@ data-target="#bs-example-navbar-collapse-1">
 <span class="icon-bar"></span> 
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+<a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
 </div>
 <div>
 <div class="collapse navbar-collapse"
@@ -208,17 +208,13 @@ id="bs-example-navbar-collapse-1">
 </sec:authorize>
 </ul>
 <ul class="nav navbar-nav navbar-right" id="mynav">
-<sec:authentication var="id" property="name" />
-<c:url var="user" value="/user/info">
-<c:param name="id" value="${id }" />
-</c:url>
 <sec:authorize access="!isAuthenticated()">
 <li><a href="#myModal" data-toggle="modal">로그인</a></li>
 <li><a href="<c:url value="/user/join"/>">회원가입</a></li>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
 <li><a href="javascript:logout();">로그아웃</a></li>
-<li><a href="${user}">내정보보기</a></li>
+<li><a href="<c:url value="/user/info"/>">내 서재 가기</a></li>
 </sec:authorize>
 <li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
 <li><a href="<c:url value="/board/list"/>">자유게시판</a></li>

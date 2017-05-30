@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Groovin one page bootstrap template</title>
+<title>RD도서관에 오신걸 환영합니다.</title>
 <!-- styles -->
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
@@ -77,7 +77,7 @@ margin-top: 23%;
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<c:url value="/"/>">Groovin</a>
+      <a class="navbar-brand" href="<c:url value="/"/>">RD Library</a>
     </div>
 	<div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -97,7 +97,7 @@ margin-top: 23%;
 </c:url>
 <sec:authorize access="isAuthenticated()">
 <li><a href="javascript:logout();">로그아웃</a></li>
-<li><a href="${user}">내정보보기</a></li>
+<li><a href="${user}">내 서재 가기</a></li>
 </sec:authorize>
 <sec:authorize access="!isAuthenticated()">
 <li><a href="#myModal" data-toggle="modal">로그인</a></li>
@@ -149,19 +149,13 @@ margin-top: 23%;
 			<div class="heading">
 				<h3><span>About us</span></h3>
 			</div>
-			<div class="sub-heading">
-				<p>
-					 Creating a visual language around the beliefs of the brands we work with.
-				</p>
-			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-3">
 			<div class="team-box">
-			<img src="assets/img/dummies/team1.jpg" alt="" class="img-responsive" />
 			<div class="roles">
-				<h5><strong>Baby Stewards Jr</strong></h5>
+				<h5><strong>유 선 필</strong></h5>
 				<p>
 					CEO - Founder
 				</p>
@@ -173,11 +167,27 @@ margin-top: 23%;
 			</div>
 			</div>
 		</div>
+		
+			<div class="col-md-3">
+			<div class="team-box">
+			<div class="roles">
+				<h5><strong>남 기 현</strong></h5>
+				<p>
+					CEO - Founder
+				</p>
+				<ul class="social-profile">
+					<li><a href="#"><i class="fa fa-facebook fa-lg"></i></a></li>
+					<li><a href="#"><i class="fa fa-twitter fa-lg"></i></a></li>
+					<li><a href="#"><i class="fa fa-dribbble fa-lg"></i></a></li>
+				</ul>
+			</div>
+			</div>
+		</div>
+		
 		<div class="col-md-3">
 			<div class="team-box">
-			<img src="assets/img/dummies/team2.jpg" alt="" class="img-responsive" />
 			<div class="roles">
-				<h5><strong>Tommy Kreunichev</strong></h5>
+				<h5><strong>이 광 규</strong></h5>
 				<p>
 					Lead designer
 				</p>
@@ -191,9 +201,8 @@ margin-top: 23%;
 		</div>
 		<div class="col-md-3">
 			<div class="team-box">
-			<img src="assets/img/dummies/team3.jpg" alt="" class="img-responsive" />
 			<div class="roles">
-				<h5><strong>Moriella Maccini</strong></h5>
+				<h5><strong>이 정 협</strong></h5>
 				<p>
 					Customer support
 				</p>
@@ -207,9 +216,8 @@ margin-top: 23%;
 		</div>
 		<div class="col-md-3">
 			<div class="team-box">
-			<img src="assets/img/dummies/team4.jpg" alt="" class="img-responsive" />
 			<div class="roles">
-				<h5><strong>Brian James Scoothie</strong></h5>
+				<h5><strong>홍 준 기</strong></h5>
 				<p>
 					Coffee maker modal
 				</p>
