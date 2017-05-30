@@ -26,6 +26,8 @@ public interface BookDao {
 	public int check(@Param("userid")String userid);
 
 	public int returnBook(int num);
+	
+	public int adminBook(int num);
 
 	public int checkBook(int booknum);
 

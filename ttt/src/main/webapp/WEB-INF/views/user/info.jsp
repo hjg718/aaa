@@ -8,8 +8,6 @@
 <meta charset="utf-8">
 <title>회원 정보보기</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-<c:url var="url" value="/resources/jquery.bootpag.min.js" />
-<script src="${url }"></script>
 <link href="<c:url value='/resources/assets/css/bootstrap.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/bootstrap-theme.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/assets/css/style.css'/>" rel="stylesheet" />
@@ -125,11 +123,16 @@ function logout() {
 <style>
 .table{
 text-align: center;
+table-layout: fixed;
 }
 th{
 text-align: center;
 }
-
+td{
+white-space:nowrap;
+overflow:hidden;
+text-overflow: ellipsis;
+}
 </style>
 </head>
 <body>
@@ -163,8 +166,8 @@ text-align: center;
 								<sec:authorize access="isAuthenticated()">
 									<li><a href="javascript:logout();">로그아웃</a></li>
 								</sec:authorize>
-								<li><a>Q&amp;A게시판</a></li>
-							<li><a>자유게시판</a></li>
+							<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+							<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 							</ul>
 					
 							<form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"

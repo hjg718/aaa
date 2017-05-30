@@ -103,8 +103,8 @@ margin-top: 23%;
 <li><a href="#myModal" data-toggle="modal">로그인</a></li>
 <li><a href="<c:url value="/user/join"/>">회원가입</a></li>
 </sec:authorize>
-<li><a href="qb/list">Q&amp;A게시판</a></li>
-<li><a href="boardListStart">자유게시판</a></li>
+<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 </ul>
 </nav>
 </div>

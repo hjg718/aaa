@@ -147,7 +147,6 @@ white-space: pre-line;
 	<header>
 		<div id="navigation"class="navbar navbar-inverse navbar-fixed-top default"role="navigation">
 			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
 						data-target="#bs-example-navbar-collapse-1">
@@ -183,8 +182,8 @@ white-space: pre-line;
 									<li><a href="javascript:logout();">로그아웃</a></li>
 									<li><a href="${user}">내정보보기</a></li>
 								</sec:authorize>
-								<li><a>Q&amp;A게시판</a></li>
-							<li><a>자유게시판</a></li>
+							<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+							<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 							</ul>
 					
 							<form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"
@@ -202,7 +201,6 @@ white-space: pre-line;
 							
 						</nav>
 					</div>
-					<!-- /.navbar-collapse -->
 				</div>
 			</div>
 		</div>
@@ -242,7 +240,7 @@ white-space: pre-line;
 <c:when test="${book.rentaluser!=id }">
 <div class="panel panel-warning">
 <div class="panel-heading">
-<h4 class="panel-title">이도서는 대여중(예약중)입니다.</h4>
+<h4 class="panel-title">이도서는 대여중 (예약중) 입니다.</h4>
 </div>
 <div class="panel-body">
 <c:choose>

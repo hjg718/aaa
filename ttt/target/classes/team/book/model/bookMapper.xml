@@ -56,6 +56,10 @@
 		UPDATE rental SET return = 0 WHERE num = #{num}
 	</update>
 	
+	<update id="adminBook">
+		UPDATE rental SET return = 2 WHERE num = #{num}
+	</update>
+	
 	<update id="decCurrbook">
 		UPDATE puser SET currbook = (currbook-1) WHERE userid = #{userid}
 	</update>

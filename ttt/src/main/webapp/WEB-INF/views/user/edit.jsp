@@ -153,8 +153,8 @@ display: none;
 								<li><a href="javascript:logout();">로그아웃</a></li>
 								<li><a href="${user}">내정보보기</a></li>
 								</sec:authorize>
-								<li><a>Q&amp;A게시판</a></li>
-							<li><a>자유게시판</a></li>
+							<li><a href="<c:url value="/qna/list"/>">Q&amp;A게시판</a></li>
+							<li><a href="<c:url value="/board/list"/>">자유게시판</a></li>
 							</ul>
 					
 							<form action="<c:url value="/book/search"/>" method="post" onsubmit="return check();"
@@ -259,7 +259,7 @@ display: none;
 </div>
 <div class="modal-body">
 <div class="form-group">
- 정보 수정을 원하시면 현재 비밀번호를 입력해주세요.(필수사항)
+ 정보 수정을 원하시면 현재 비밀번호를 입력해주세요. (필수사항)
 </div>
 <div class="form-group">
 <label for="pwd" class="col-sm-2 control-label">Password</label>

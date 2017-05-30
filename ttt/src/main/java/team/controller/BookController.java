@@ -79,7 +79,7 @@ public class BookController {
 	
 	@RequestMapping("rental")
 	@ResponseBody
-	public String rental(@RequestParam("booknum")int booknum, @RequestParam("userid") String userid ){
+	public String rental(@RequestParam("booknum")int booknum, @RequestParam("userid") String userid,HttpSession session){
 		String pass = svc.rental(booknum,userid);
 		return pass;
 	}
@@ -87,6 +87,13 @@ public class BookController {
 	@RequestMapping("returnBook")
 	@ResponseBody
 	public String returnBook(@RequestParam("num")int num,@RequestParam("userid") String userid){
+		String pass= svc.returnBook(num,userid);
+		return pass;
+	}
+	
+	@RequestMapping("adminBook")
+	@ResponseBody
+	public String adminBook(@RequestParam("num")int num,@RequestParam("userid") String userid){
 		String pass= svc.returnBook(num,userid);
 		return pass;
 	}

@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jdk.nashorn.internal.scripts.JS;
-import team.QnA.Qna;
-import team.QnA.QnaDao;
-import team.QnA.QnaVo;
+import team.QnA.model.Qna;
+import team.QnA.model.QnaDao;
+import team.QnA.model.QnaVo;
 
 @Service
 public class QnaService {
@@ -23,35 +23,26 @@ public class QnaService {
 	@Autowired
 	private SqlSessionTemplate sqlST;
 
-	public String  save(QnaVo vo){
+	public boolean save(QnaVo vo){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
 		JSONObject job = new JSONObject();
 		int input = dao.save(vo);
-		System.out.println("svc"+vo.getPwd());
 		boolean ok ;
 		if(input == 0){
 			ok = false;
 		}else {
 			ok = true;
 		}
-		job.put("save",ok);
-		return job.toJSONString();
+		return ok;
 	}
 	
-	public QnaVo Recent(String userId){
+	public ArrayList<QnaVo> list(){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
-		QnaVo vo = dao.Recent(userId);
-		return vo;
+		return dao.list();
 	}
 	
 	
-	public ArrayList<QnaVo> List(){
-		QnaDao dao = sqlST.getMapper(QnaDao.class);
-		return dao.List();
-	}
-	
-	
-	public String Page(int num){
+	public String page(int num){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
 		JSONArray jarr = new JSONArray();
 		Qna list = dao.getPage(num);
@@ -66,15 +57,15 @@ public class QnaService {
 	}
 	
 
-	public QnaVo Read(int num){
+	public QnaVo read(int num){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
-		return dao.Read(num);
+		return dao.read(num);
 	}
 	
-	public String Find(String keyword,String category,int pgnum){
+	public String find(String keyword,String category,int pgnum){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
 		JSONArray jarr = new JSONArray();
-		ArrayList<QnaVo> list = dao.Find(keyword,category,pgnum);
+		ArrayList<QnaVo> list = dao.find(keyword,category,pgnum);
 		for(int i=0; i<list.size(); i++){
 			JSONObject job = new JSONObject();
 			job.put("num",list.get(i).getNum());
@@ -88,32 +79,40 @@ public class QnaService {
 	}
 	
 	
-	public int Modify(QnaVo vo,HttpSession session){
+	public boolean modify(QnaVo vo){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
-		session.setAttribute("userId",vo.getAuthor());
-		Map<String,Boolean> map = new HashMap<String,Boolean>();
-		int mod = dao.Modify(vo);
+		int row = dao.modify(vo);
 		boolean ok ;
-		if(mod==0){
-			ok = false;
-		}else{
-			ok = true;
+		if(row>0){
+			ok=true;
 		}
-		map.put("save", ok);
-		return mod;
+		else{
+			ok=false;
+		}
+		return ok;
 	}
 	
-	public String Delete(int num){
+	public String delete(int num,int pwd){
 		QnaDao dao = sqlST.getMapper(QnaDao.class);
-		int del = dao.Delete(num);
+		QnaVo vo = dao.read(num);
 		JSONObject job = new JSONObject();
-		boolean ok = false;
-		if(del > 0){
-			ok = true;
-			job.put("remove",ok);
+		
+		if(vo.getPwd()==pwd){
+			int row = dao.delete(num);
+			if(row>0){
+				job.put("pass",true);
+				return job.toJSONString();
+			}
+		}else if(vo.getPwd()!=pwd){
+			job.put("pass",false);
 		}
 		return job.toJSONString();
-		
+	}
+
+	public QnaVo recent(String id) {
+		QnaDao dao = sqlST.getMapper(QnaDao.class);
+		QnaVo vo = dao.recent(id);
+		return vo;
 	}
 	
 }

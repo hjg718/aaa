@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import team.QnA.Qna;
-import team.QnA.QnaVo;
+import team.QnA.model.Qna;
+import team.QnA.model.QnaVo;
 import team.service.QnaService;
 
 @Controller
-@RequestMapping("qb/")
+@RequestMapping("qna/")
 public class QnAController {
 	
 	@Autowired
@@ -31,99 +32,88 @@ public class QnAController {
 	}
 	
 	@RequestMapping(value="save",method=RequestMethod.POST)
-	@ResponseBody
-	public String save(QnaVo vo,HttpSession session){
-		session.setAttribute("userId",vo.getAuthor());
-		session.setAttribute("pwd",vo.getPwd());
-		String input = svc.save(vo);
-		return input;
+	public String save(QnaVo vo,Model model){
+		boolean ok = svc.save(vo);
+		if(ok==true){
+			model.addAttribute("recent",svc.read(vo.getNum()));
+		}
+		return "qna/recent";
 	}
 	
-	@RequestMapping(value = "recent")
-	public String recent(QnaVo vo,Model model,HttpSession session){
-		String userId = (String)session.getAttribute("userId");
-		System.out.println(userId);
-		model.addAttribute("recent",svc.Recent(userId));
-		return "qna/recent";
-		}
-	
 	@RequestMapping(value="list")
-	public String list(QnaVo vo,Model model,HttpSession session){
-		ArrayList<QnaVo> list = svc.List();
+	public String list(QnaVo vo,Model model){
+		ArrayList<QnaVo> list = svc.list();
 		model.addAttribute("list",list);
-		session.setAttribute("curr",1);
-		session.setAttribute("total",list.get(0).getTotalpages());
 		return "qna/list"; 
 	}
 	
 	@RequestMapping(value="page", method=RequestMethod.POST)
 	@ResponseBody
 	public String getPage(@RequestParam("pgnum") int num){
-		String list = svc.Page(num);
+		String list = svc.page(num);
 		return list;
 	}
 	
 
 	@RequestMapping(value="read")
 	public String Read(@RequestParam("num")int num,Model model,QnaVo vo,HttpSession session){
-		session.setAttribute("read",svc.Read(num));
+		session.setAttribute("read",svc.read(num));
 		return "qna/read";
 	}
 	
 	@RequestMapping(value="find")
 	@ResponseBody
-	public String Find(@RequestParam("keyword")String keyword, @RequestParam("category")String category,@RequestParam("pgnum")int pgnum
+	public String find(@RequestParam("keyword")String keyword, @RequestParam("category")String category,@RequestParam("pgnum")int pgnum
 			,HttpSession session){
-		String list = svc.Find(keyword, category, pgnum);
+		String list = svc.find(keyword, category, pgnum);
 		return list;
 	}
 	
-	
-	
-	@RequestMapping(value="modify",method=RequestMethod.GET)
-	public String ModifyF(HttpSession session,@RequestParam("pwd")int pwd){
-		int fpwd = (Integer) session.getAttribute("pwd");
-		if(fpwd != pwd){
-			return "qna/read";
-		}else {
-		return "qna/modify";
-		}
+	@RequestMapping(value="recent")
+	public String recent(@RequestParam("id")String id,Model model){
+		model.addAttribute("recent",svc.recent(id));
+		return "qna/recent";
 	}
 	
-	
+	@RequestMapping(value="modifyPage")
+	public String ModifyF(@RequestParam("num")int num,@RequestParam("pwd")int pwd,Model model){
+		QnaVo vo = svc.read(num);
+		model.addAttribute("read", vo);
+		if(vo.getPwd()==pwd){
+			return "qna/modify";
+		}
+		model.addAttribute("error", true);
+		return "qna/read";
+	}
 	
 	@RequestMapping(value="modify",method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Integer> setUpdateModify(QnaVo vo,HttpSession session){
-		int mo = svc.Modify(vo, session);
-		Map<String,Integer> map = new HashMap<String,Integer>();
-		map.put("mo",mo);
-		return map;
-	}
-	
-	@RequestMapping(value="delete",method=RequestMethod.GET)
-	public String deleteF(HttpSession session,@RequestParam("dpwd")int pwd){
-		int fpwd = (Integer) session.getAttribute("pwd");
-		if(fpwd != pwd){
+	public String setUpdateModify(QnaVo vo,Model model){
+		boolean ok = svc.modify(vo);
+		if(ok==true){
+			model.addAttribute("read", svc.read(vo.getNum()));
 			return "qna/read";
-		}else {
-		return "qna/delete";
 		}
+		model.addAttribute("read", svc.read(vo.getNum()));
+		model.addAttribute("error", true);
+		return "qna/modify";
 	}
 	
 	@RequestMapping(value="delete")
 	@ResponseBody
-	public String Delete(@RequestParam("num")int num){
-		String del = svc.Delete(num);
+	public String Delete(@RequestParam("num")int num,@RequestParam("pwd")int pwd){
+		String del = svc.delete(num,pwd);
 		return del;
 	}
 	
 	@RequestMapping(value="reple")
 	@ResponseBody
-	public String Reple(QnaVo vo,HttpSession session){
-		session.setAttribute("userId",vo.getAuthor());
-		String re = svc.save(vo);
-		return re;
+	public Map<String, Boolean> Reple(QnaVo vo){
+		Boolean ok = svc.save(vo);
+		Map<String, Boolean> map = new HashMap<String, Boolean>();		
+		if(ok==true){
+			map.put("ok", ok);
+		}
+		return map;
 	}
 	
 	
